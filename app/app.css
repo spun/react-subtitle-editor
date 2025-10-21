@@ -1,0 +1,248 @@
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Define the color variables for the light theme */
+:root {
+  --color-primary: #3B6A1C;
+  --color-on-primary: #FFFFFF;
+  --color-primary-container: #BBF294;
+  --color-on-primary-container: #0A2100;
+  --color-inverse-primary: #A0D57B;
+  --color-secondary: #56624B;
+  --color-on-secondary: #FFFFFF;
+  --color-secondary-container: #D9E7CA;
+  --color-on-secondary-container: #141E0C;
+  --color-tertiary: #386666;
+  --color-on-tertiary: #FFFFFF;
+  --color-tertiary-container: #BBECEB;
+  --color-on-tertiary-container: #002020;
+  --color-background: #F9F9F9;
+  --color-on-background: #1B1B1B;
+  --color-surface: #F9F9F9;
+  --color-on-surface: #1B1B1B;
+  --color-surface-variant: #E2E2E2;
+  --color-on-surface-variant: #474747;
+  --color-surface-tint: #3B6A1C;
+  --color-inverse-surface: #131313;
+  --color-inverse-on-surface: #E2E2E2;
+  --color-error: #B3261E;
+  --color-on-error: #FFFFFF;
+  --color-error-container: #F9DEDC;
+  --color-on-error-container: #410E0B;
+  --color-outline: #777777;
+  --color-outline-variant: #C6C6C6;
+  --color-scrim: #000000;
+  --color-surface-bright: #F9F9F9;
+  --color-surface-dim: #DADADA;
+  --color-surface-container-lowest: #EFF2EE;
+  --color-surface-container-low: #E9EDE7;
+  --color-surface-container: #E5EAE2;
+  --color-surface-container-high: #E3E8DF;
+  --color-surface-container-highest: #DFE5DB;
+}
+
+/* Define the color variables for the dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #A0D57B;
+    --color-on-primary: #163800;
+    --color-primary-container: #245103;
+    --color-on-primary-container: #BBF294;
+    --color-inverse-primary: #3B6A1C;
+    --color-secondary: #BDCBAF;
+    --color-on-secondary: #283420;
+    --color-secondary-container: #3E4A35;
+    --color-on-secondary-container: #D9E7CA;
+    --color-tertiary: #A0CFCE;
+    --color-on-tertiary: #003737;
+    --color-tertiary-container: #1E4E4E;
+    --color-on-tertiary-container: #BBECEB;
+    --color-background: #131313;
+    --color-on-background: #E2E2E2;
+    --color-surface: #131313;
+    --color-on-surface: #E2E2E2;
+    --color-surface-variant: #474747;
+    --color-on-surface-variant: #C6C6C6;
+    --color-surface-tint: #A0D57B;
+    --color-inverse-surface: #F9F9F9;
+    --color-inverse-on-surface: #1B1B1B;
+    --color-error: #F2B8B5;
+    --color-on-error: #601410;
+    --color-error-container: #8C1D18;
+    --color-on-error-container: #F9DEDC;
+    --color-outline: #919191;
+    --color-outline-variant: #474747;
+    --color-scrim: #000000;
+    --color-surface-bright: #393939;
+    --color-surface-dim: #131313;
+    --color-surface-container-lowest: #1A1D18;
+    --color-surface-container-low: #1F231C;
+    --color-surface-container: #22281E;
+    --color-surface-container-high: #242A1F;
+    --color-surface-container-highest: #262E21;
+  }
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Outfit", sans-serif;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+}
+
+main {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 16px
+}
+
+.appBar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 8px;
+}
+
+.button {
+  font-weight: bold;
+  border-radius: 24px;
+  background-color: transparent;
+  color: var(--color-on-primary);
+  padding: 10px 24px;
+  cursor: pointer;
+  border: 0;
+
+  &.textButton {
+    color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-surface-variant);
+    }
+  }
+
+  &.outlinedButton {
+    border: 1px solid var(--color-outline);
+    color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-surface-variant);
+    }
+  }
+
+  &.filledButton {
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-secondary);
+      color: var(--color-on-secondary);
+    }
+  }
+}
+
+.fileInfo {
+  padding: 8px 24px 24px 24px;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  border-radius: 24px;
+
+  h2 {
+    color: var(--color-primary);
+  }
+
+  p span {
+    font-weight: bold;
+    line-height: 28px;
+    display: block;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.filterActionWrapper {
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.timeSyncWrapper {
+  padding: 8px 24px 0 24px;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  border-radius: 24px;
+
+  h3 {
+    color: var(--color-primary);
+  }
+
+  .actions {
+    padding: 24px 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
+
+.lineList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .linePreview {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-size: .85em;
+    overflow: hidden;
+    padding: 8px 16px;
+    margin-bottom: 2px;
+    cursor: pointer;
+
+    &:first-child {
+      border-radius: 24px 24px 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 24px 24px;
+      /* give lineEditor space */
+      margin-bottom: 250px;
+    }
+
+    &:hover {
+      background-color: var(--color-surface-variant);
+      color: var(--color-on-surface);
+    }
+
+    &.selected {
+      background-color: var(--color-secondary);
+      color: var(--color-on-secondary);
+
+      .info {
+        color: color-mix(in srgb, currentColor 70%, var(--color-secondary));
+      }
+    }
+
+    .info {
+      color: color-mix(in srgb, currentColor 70%, var(--color-surface));
+
+      .timestamp {
+        font-size: 1.2em;
+        font-family: monospace;
+        margin: 0 8px
+      }
+    }
+
+    .content {
+      white-space: pre;
+      font-size: 1.2em;
+    }
+  }
+}
