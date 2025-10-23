@@ -6,24 +6,38 @@ This is a remake of [this project](https://github.com/spun/angularjs-subApp), no
 
 ## How to run
 
-### Install dependencies
+### Using npm
+
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Build
-
-Generate the web app:
+Build the web app:
 
 ```bash
 npm run build
 ```
 
-### Run dev server
-
 Start the development server:
 
 ```bash
 npm run dev
+```
+
+---
+
+### Using Docker
+
+Build the image:
+
+```bash
+docker build -t react-subtitle-editor:1.0 . 
+```
+
+Run the container:
+
+```bash
+docker run --rm -d -p 8080:8080 localhost/react-subtitle-editor:1.0
 ```
