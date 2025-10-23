@@ -94,7 +94,7 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, children }:
         <section className="uploadForm">
           <div className="dropCircle"> <p>Drop here</p> </div>
           <label className="uploadButton">
-            <input type="file" onChange={handleFileChange} />
+            <input type="file" accept=".srt,text/plain" onChange={handleFileChange} />
             Or click here to browse
           </label></section>
       ) : (
