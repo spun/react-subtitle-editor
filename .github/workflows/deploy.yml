@@ -32,15 +32,14 @@ jobs:
       - name: Setup Pages 📄
         uses: actions/configure-pages@v5
 
-      - name: Install and Build 🔧
-        env:
-          PUBLIC_BASE_PATH: "/androidx-cl-search"
-        run: |
-          npm ci
-          npm run build
+      - name: Install dependencies 📦
+        run: npm ci
 
-#      - name: Test 🧪
-#        run: npm test
+      - name: Run tests 🧪
+        run: npm test
+
+      - name: Build 🔧
+        run: npm run build
 
       - name: Upload artifact 📤
         uses: actions/upload-pages-artifact@v4

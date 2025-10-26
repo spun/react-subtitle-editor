@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +17,11 @@ jobs:
       with:
         node-version: '22'
 
-    - name: Install and Build 🔧
-      run: |
-        npm ci
-        npm run build
+    - name: Install dependencies 📦
+      run: npm ci
+
+    - name: Run tests 🧪
+      run: npm test
+
+    - name: Build 🔧
+      run: npm run build
