@@ -1,3 +1,9 @@
+export enum LineState {
+  ENABLED = 'ENABLED',
+  REMOVED = 'REMOVED',
+  FILTERED = 'FILTERED',
+}
+
 export type SubtitleLine = {
   index: number;
   startTime: string;
@@ -5,6 +11,7 @@ export type SubtitleLine = {
   endTime: string;
   endTimeMillis: number;
   text: string;
+  state: LineState;
 }
 
 function timeInMillisToSrtTime(timeInMillis: number) {
@@ -32,5 +39,15 @@ export function updateTimesFromSubtitleLine(
     startTimeMillis: newStartMillis,
     endTime: timeInMillisToSrtTime(newEndMillis),
     endTimeMillis: newEndMillis,
+  }
+}
+
+export function updateStateFromSubtitleLine(
+  subtitleLine: SubtitleLine,
+  state: LineState,
+): SubtitleLine {
+  return {
+    ...subtitleLine,
+    state: state
   }
 }

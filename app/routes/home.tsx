@@ -2,14 +2,15 @@ import { useState } from 'react';
 
 import type { Route } from "./+types/home";
 import { ActionPane, updateCurrentSubtitleFromAppState, updateLinesFromAppState, updateSelectedLineFromAppState, updateSelectedLineIndexFromAppState, updateSelectedPaneFromAppState, type AppState } from "~/models/AppState";
-import type { SubtitleFile } from '~/models/SubtitleFile';
-import { updateTimesFromSubtitleLine, type SubtitleLine } from "~/models/SubtitleLine";
+import { updateLineFromSubtitleFile, updateSelectedLineIndexFromSubtitleFile, type SubtitleFile } from '~/models/SubtitleFile';
+import { LineState, updateStateFromSubtitleLine, updateTimesFromSubtitleLine, type SubtitleLine } from "~/models/SubtitleLine";
 import { downloadSubtitleAsSrt } from '~/utils/export';
 import { DragDropUpload } from '~/components/dragDropUpload/dragDropUpload';
 import { SegmentedButton } from '~/components/segmentedButton/segmentedButton';
 import { TimeInput } from '~/components/timeInput/timeInput';
 import { Line } from '~/components/line/line';
 import { LineEditor } from '~/components/lineEditor/lineEditor';
+import { RegexFilter } from '~/components/regexFilter/regexFilter';
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -43,6 +44,17 @@ export default function Home() {
       setAppState(newAppState)
     }
   }
+
+  // Modify selected line to show/hide the line editor
+  /* const handleLineDeletion = (lineIndex: number) => {
+    if (currentSubtitle != null) {
+      const line = currentSubtitle.lines[lineIndex]
+      const updatedLine = updateStateFromSubtitleLine(line, LineState.REMOVED)
+      const updatedFile = updateLineFromSubtitleFile(currentSubtitle, updatedLine, lineIndex)
+      const newAppState = updateLinesFromAppState(appState, updatedFile.lines)
+      setAppState(newAppState)
+    }
+  } */
 
   // Update selected line with the new value from the line editor
   const handleLineEdit = (updatedLine: SubtitleLine) => {
@@ -101,6 +113,7 @@ export default function Home() {
                 options={[
                   { id: ActionPane.Lines, key: "lines", text: "Lines" },
                   { id: ActionPane.Sync, key: "sync", text: "Sync" },
+                  { id: ActionPane.RegexFilter, key: "regex_filter", text: "Filter" },
                 ]}
                 selected={appState.selectedPane}
                 onSelected={handleSelectedPane} />
@@ -131,6 +144,14 @@ export default function Home() {
                     })
                   }
                 </ul>
+              </section>
+            }
+
+            { /* Display regex filter panel. Search and remove using regex. */}
+            {appState.selectedPane == ActionPane.RegexFilter &&
+              <section>
+                <h3>Filter</h3>
+                <RegexFilter lines={currentSubtitle.lines} />
               </section>
             }
           </main>

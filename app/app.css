@@ -207,11 +207,13 @@ main {
     cursor: pointer;
 
     &:first-child {
-      border-radius: 24px 24px 0 0;
+      border-start-start-radius: 24px;
+      border-start-end-radius: 24px;
     }
 
     &:last-child {
-      border-radius: 0 0 24px 24px;
+      border-end-start-radius: 24px;
+      border-end-end-radius: 24px;
       /* give lineEditor space */
       margin-bottom: 250px;
     }
@@ -244,5 +246,35 @@ main {
       white-space: pre;
       font-size: 1.2em;
     }
+  }
+}
+
+.matchHighlight {
+  padding: 0 2px;
+  border-radius: 4px;
+
+  &:has(+ .matchHighlight) {
+    border-start-end-radius: 0px;
+    border-end-end-radius: 0px;
+  }
+
+  +.matchHighlight {
+    border-start-start-radius: 0px;
+    border-end-start-radius: 0px;
+  }
+
+  &.cc {
+    background-color: #ff6961;
+    color: black;
+  }
+
+  &.lyrics {
+    background-color: #3A6ACB;
+    color: black;
+  }
+
+  &.cc.lyrics {
+    background-color: #de83f5;
+    color: black;
   }
 }

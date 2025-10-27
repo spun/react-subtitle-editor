@@ -27,7 +27,7 @@
       Differentiate between uploadForm and mainContent dragging border
       to avoid showing a vertical scrollbar in uploadForm.
       */
-      min-height: 100vh;
+      min-height: 100dvh;
       padding: 0px;
       border: 4px dashed var(--color-primary);
       box-sizing: border-box;
@@ -45,7 +45,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     gap: 32px;
 
