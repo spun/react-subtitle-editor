@@ -11,8 +11,9 @@ import { TimeInput } from '~/components/timeInput/timeInput';
 import { Line } from '~/components/line/line';
 import { LineEditor } from '~/components/lineEditor/lineEditor';
 import { RegexFilter } from '~/components/regexFilter/regexFilter';
-import { TextButton } from '~/components/buttons/buttons';
 import { FileInfo } from '~/components/fileInfo/fileInfo';
+import { AppBar } from '~/components/appBar/appBar';
+import { useTheme } from '~/utils/useTheme';
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -23,6 +24,9 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function Home() {
 
+  // We set the theme outside AppState because the selected value is stored in localStorage
+  // and managing it inside AppState could be complicated.
+  const [theme, setTheme] = useTheme("system");
   const [appState, setAppState] = useState<AppState>({ currentSubtitle: null, selectedPane: ActionPane.Lines })
   const currentSubtitle = appState.currentSubtitle
 
@@ -107,74 +111,83 @@ export default function Home() {
   }
 
   return (
-    <DragDropUpload showForm={currentSubtitle == null} onUpload={handleUpload}>
-      {currentSubtitle != null &&
-        <>
-          <nav className="appBar">
-            <TextButton onClick={handleClose}>Close</TextButton>
-          </nav>
+    <>
+      {/* 
+        We don't need to wrap it for the theme to be applied 
+        :root will search for this class name and apply the correct theme 
+      */}
+      <div className={theme} />
+      <DragDropUpload
+        showForm={currentSubtitle == null}
+        onUpload={handleUpload}
+        appBar={
+          <AppBar theme={theme} setTheme={setTheme} isFileOpen={currentSubtitle != null} onClose={handleClose} />
+        }
+      >
+        {currentSubtitle != null &&
+          <>
+            <main>
+              { /* File info block. Name, num lines, export, etc.*/}
+              <FileInfo file={currentSubtitle} onExport={handleExport} />
 
-          <main>
-            { /* File info block. Name, num lines, export, etc.*/}
-            <FileInfo file={currentSubtitle} onExport={handleExport} />
-
-            { /* Action filter. Select which action is visible.*/}
-            <section className="filterActionWrapper">
-              <SegmentedButton
-                options={[
-                  { id: ActionPane.Lines, key: "lines", text: "Lines" },
-                  { id: ActionPane.Sync, key: "sync", text: "Sync" },
-                  { id: ActionPane.RegexFilter, key: "regex_filter", text: "Filter" },
-                ]}
-                selected={appState.selectedPane}
-                onSelected={handleSelectedPane} />
-            </section>
-
-            { /* Display Sync panel. Add or remove time to all lines. */}
-            {appState.selectedPane == ActionPane.Sync &&
-              <section className="timeSyncWrapper">
-                <h3>Sync correction</h3>
-                <TimeInput onSyncRequest={handleSyncRequest} />
+              { /* Action filter. Select which action is visible.*/}
+              <section className="filterActionWrapper">
+                <SegmentedButton
+                  options={[
+                    { id: ActionPane.Lines, key: "lines", text: "Lines" },
+                    { id: ActionPane.Sync, key: "sync", text: "Sync" },
+                    { id: ActionPane.RegexFilter, key: "regex_filter", text: "Filter" },
+                  ]}
+                  selected={appState.selectedPane}
+                  onSelected={handleSelectedPane} />
               </section>
-            }
 
-            { /* Display lines. Edit line by line. */}
-            {appState.selectedPane == ActionPane.Lines &&
-              <section>
-                <ul className="lineList">
-                  {
-                    currentSubtitle.lines.map((line, index) => {
-                      const isSelected = index === currentSubtitle.selectedLineIndex;
-                      return (
-                        <Line
-                          key={index}
-                          className={isSelected ? "selected" : ""}
-                          value={line}
-                          onClick={() => handleLineSelection(index)}
-                          onUndo={() => handleLineUndo(index)}
-                          onDelete={() => handleLineDeletion(index)} />
-                      )
-                    })
-                  }
-                </ul>
-              </section>
-            }
+              { /* Display Sync panel. Add or remove time to all lines. */}
+              {appState.selectedPane == ActionPane.Sync &&
+                <section className="timeSyncWrapper">
+                  <h3>Sync correction</h3>
+                  <TimeInput onSyncRequest={handleSyncRequest} />
+                </section>
+              }
 
-            { /* Display regex filter panel. Search and remove using regex. */}
-            {appState.selectedPane == ActionPane.RegexFilter &&
-              <section className="regexFilterWrapper">
-                <h3>Filter</h3>
-                <RegexFilter lines={currentSubtitle.lines} onUpdateLines={handleLinesUpdate} />
-              </section>
-            }
-          </main>
+              { /* Display lines. Edit line by line. */}
+              {appState.selectedPane == ActionPane.Lines &&
+                <section>
+                  <ul className="lineList">
+                    {
+                      currentSubtitle.lines.map((line, index) => {
+                        const isSelected = index === currentSubtitle.selectedLineIndex;
+                        return (
+                          <Line
+                            key={index}
+                            className={isSelected ? "selected" : ""}
+                            value={line}
+                            onClick={() => handleLineSelection(index)}
+                            onUndo={() => handleLineUndo(index)}
+                            onDelete={() => handleLineDeletion(index)} />
+                        )
+                      })
+                    }
+                  </ul>
+                </section>
+              }
 
-          { /* Selected line editor. Outside of main to fill the whole width */}
-          {currentSubtitle.selectedLineIndex != null && appState.selectedPane == ActionPane.Lines &&
-            <LineEditor line={currentSubtitle.lines[currentSubtitle.selectedLineIndex]} onLineEdit={handleLineEdit} />
-          }
-        </>
-      }
-    </DragDropUpload>
+              { /* Display regex filter panel. Search and remove using regex. */}
+              {appState.selectedPane == ActionPane.RegexFilter &&
+                <section className="regexFilterWrapper">
+                  <h3>Filter</h3>
+                  <RegexFilter lines={currentSubtitle.lines} onUpdateLines={handleLinesUpdate} />
+                </section>
+              }
+            </main>
+
+            { /* Selected line editor. Outside of main to fill the whole width */}
+            {currentSubtitle.selectedLineIndex != null && appState.selectedPane == ActionPane.Lines &&
+              <LineEditor line={currentSubtitle.lines[currentSubtitle.selectedLineIndex]} onLineEdit={handleLineEdit} />
+            }
+          </>
+        }
+      </DragDropUpload>
+    </>
   );
 }

@@ -9,10 +9,11 @@ const srtParser = new Parser();
 interface DragDropUploadProps {
   showForm: boolean;
   onUpload: (subtitleFile: SubtitleFile) => void;
+  appBar: React.ReactNode;
   children: React.ReactNode;
 }
 
-export function DragDropUpload({ showForm: showUploadForm, onUpload, children }: DragDropUploadProps) {
+export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, children }: DragDropUploadProps) {
 
   // A drag and drop gesture will trigger multiple enter/leave events.
   // We need to count them to know when we should display dnd visual feedback.
@@ -92,6 +93,7 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, children }:
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onDragOver={handleDragOver}>
+      {appBar}
       {showUploadForm ? (
         <section className="uploadForm">
           <div className="dropCircle"> <p>Drop here</p> </div>

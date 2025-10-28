@@ -1,0 +1,37 @@
+.appBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  height: 34px;
+  gap: 8px;
+
+  .themeSelect {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.5;
+    transition: 0.5s ease;
+
+    span {
+      padding: 0 8px;
+      transition: 0.25s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--color-tertiary);
+        text-decoration-line: underline;
+        text-decoration-style: dashed;
+      }
+
+      &.selected {
+        color: var(--color-secondary);
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+      }
+    }
+  }
+
+  &:hover .themeSelect {
+    opacity: 1;
+  }
+}
