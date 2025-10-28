@@ -1,5 +1,6 @@
 import { useRef, useState, type ChangeEvent } from 'react';
 import type { SubtitleFile } from "../../models/SubtitleFile";
+import { LineState } from '~/models/SubtitleLine';
 import Parser from '../../utils/parser'
 import './dragDropUpload.css'
 
@@ -25,13 +26,14 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, children }:
       const parsedLines = srtParser.fromSrt(reader.result?.toString()!!)
       onUpload({
         filename: file.name,
-        lines: parsedLines.map((line) => ({
-          index: parseInt(line.id),
+        lines: parsedLines.map((line, index) => ({
+          id: index + 1,
           startTime: line.startTime,
           startTimeMillis: line.startSeconds * 1000,
           endTime: line.endTime,
           endTimeMillis: line.endSeconds * 1000,
-          text: line.text
+          text: line.text,
+          state: LineState.ENABLED
         })),
         selectedLineIndex: null
       })

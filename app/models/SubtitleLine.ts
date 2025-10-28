@@ -1,18 +1,38 @@
 export enum LineState {
   ENABLED = 'ENABLED',
   REMOVED = 'REMOVED',
-  FILTERED = 'FILTERED',
+  MODIFIED = 'MODIFIED',
 }
 
-export type SubtitleLine = {
-  index: number;
+/**
+ * Represents a line from an srt file
+ */
+type BaseSubtitleLine = {
+  /**
+   * The actual position of the line in the file (starting at 1),
+   * regardless of the index indicated in the line.
+   * The index indicated in the line itself is ignored since it 
+   * may not be reliable.
+   */
+  id: number;
+  /** Start time in srt format */
   startTime: string;
+  /** Start time in milliseconds */
   startTimeMillis: number;
+  /** End time in srt format */
   endTime: string;
+  /** End time in milliseconds */
   endTimeMillis: number;
+  /** Text is this subtitle line */
   text: string;
+  /** State of the line (ENABLED, REMOVED, ETC) */
   state: LineState;
 }
+
+export type SubtitleLine =
+  | (BaseSubtitleLine & { state: LineState.ENABLED | LineState.REMOVED })
+  | (BaseSubtitleLine & { state: LineState.MODIFIED; updatedText: string })
+
 
 function timeInMillisToSrtTime(timeInMillis: number) {
   const hours = Math.floor(timeInMillis / (1000 * 60 * 60));

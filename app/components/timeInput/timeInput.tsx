@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NumberInput } from '../numberInput/numberInput';
 import "./timeInput.css";
+import { TextButton } from '../buttons/buttons';
 
 interface TimeInputProps {
   onSyncRequest: (millis: number) => void;
@@ -54,8 +55,8 @@ export function TimeInput({ onSyncRequest }: TimeInputProps) {
       <NumberInput value={seconds} min={0} max={59} onChange={setSeconds} />,
       <NumberInput value={millis} min={0} max={999} onChange={setMillis} />
       <div className="actions">
-        <button className="button textButton" onClick={handleAddTime}>Add time</button>
-        <button className="button textButton" onClick={handleRemoveTime}>Remove time</button>
+        <TextButton onClick={handleAddTime}>Add time</TextButton>
+        <TextButton onClick={handleRemoveTime}>Remove time</TextButton>
       </div>
     </section>
   )

@@ -11,6 +11,8 @@ import { TimeInput } from '~/components/timeInput/timeInput';
 import { Line } from '~/components/line/line';
 import { LineEditor } from '~/components/lineEditor/lineEditor';
 import { RegexFilter } from '~/components/regexFilter/regexFilter';
+import { TextButton } from '~/components/buttons/buttons';
+import { FileInfo } from '~/components/fileInfo/fileInfo';
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -45,8 +47,19 @@ export default function Home() {
     }
   }
 
-  // Modify selected line to show/hide the line editor
-  /* const handleLineDeletion = (lineIndex: number) => {
+  // Change line state to mark it as removed
+  const handleLineUndo = (lineIndex: number) => {
+    if (currentSubtitle != null) {
+      const line = currentSubtitle.lines[lineIndex]
+      const updatedLine = updateStateFromSubtitleLine(line, LineState.ENABLED)
+      const updatedFile = updateLineFromSubtitleFile(currentSubtitle, updatedLine, lineIndex)
+      const newAppState = updateLinesFromAppState(appState, updatedFile.lines)
+      setAppState(newAppState)
+    }
+  }
+
+  // Change line state to mark it as removed
+  const handleLineDeletion = (lineIndex: number) => {
     if (currentSubtitle != null) {
       const line = currentSubtitle.lines[lineIndex]
       const updatedLine = updateStateFromSubtitleLine(line, LineState.REMOVED)
@@ -54,7 +67,7 @@ export default function Home() {
       const newAppState = updateLinesFromAppState(appState, updatedFile.lines)
       setAppState(newAppState)
     }
-  } */
+  }
 
   // Update selected line with the new value from the line editor
   const handleLineEdit = (updatedLine: SubtitleLine) => {
@@ -88,24 +101,22 @@ export default function Home() {
     setAppState(newAppState)
   }
 
+  const handleLinesUpdate = (lines: SubtitleLine[]) => {
+    const newAppState = updateLinesFromAppState(appState, lines)
+    setAppState(newAppState)
+  }
+
   return (
     <DragDropUpload showForm={currentSubtitle == null} onUpload={handleUpload}>
       {currentSubtitle != null &&
         <>
           <nav className="appBar">
-            <button className="button textButton" onClick={() => handleClose()}>Close</button>
+            <TextButton onClick={handleClose}>Close</TextButton>
           </nav>
 
           <main>
             { /* File info block. Name, num lines, export, etc.*/}
-            <header className='fileInfo'>
-              <h2>File information</h2>
-              <p><span>Name:</span>{currentSubtitle.filename}</p>
-              <p><span>Number of lines:</span>{currentSubtitle.lines.length}</p>
-              <div className="actions">
-                <button className="button filledButton" onClick={() => handleExport()}>Export</button>
-              </div>
-            </header>
+            <FileInfo file={currentSubtitle} onExport={handleExport} />
 
             { /* Action filter. Select which action is visible.*/}
             <section className="filterActionWrapper">
@@ -139,7 +150,9 @@ export default function Home() {
                           key={index}
                           className={isSelected ? "selected" : ""}
                           value={line}
-                          onClick={() => handleLineSelection(index)} />
+                          onClick={() => handleLineSelection(index)}
+                          onUndo={() => handleLineUndo(index)}
+                          onDelete={() => handleLineDeletion(index)} />
                       )
                     })
                   }
@@ -149,9 +162,9 @@ export default function Home() {
 
             { /* Display regex filter panel. Search and remove using regex. */}
             {appState.selectedPane == ActionPane.RegexFilter &&
-              <section>
+              <section className="regexFilterWrapper">
                 <h3>Filter</h3>
-                <RegexFilter lines={currentSubtitle.lines} />
+                <RegexFilter lines={currentSubtitle.lines} onUpdateLines={handleLinesUpdate} />
               </section>
             }
           </main>
