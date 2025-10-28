@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { getRegexMatches, mergeRegexMatchesWithAnnotation as mergeRegexMatchesWithAnnotations, mergeRegexMatches, type AnnotatedRegexMatch, type RegexMatch } from "~/models/RegexMatch";
 import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
 import { IconButton, OutlinedButton } from "../buttons/buttons";
@@ -93,10 +93,9 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
   const [filterHearingImpaired, setFilterHearingImpaired] = useState(false)
   const [filterLyrics, setFilterLyrics] = useState(false)
-  const [filteredLines, setFilteredLines] = useState<HighlightedLine[]>([])
 
-  useEffect(() => {
-    const filteredLines = lines
+  const filteredLines = useMemo(() => {
+    return lines
       .filter(l => l.state === LineState.ENABLED)
       .reduce<HighlightedLine[]>((acc, line) => {
 
@@ -149,10 +148,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
         return acc
       }, [])
-
-    setFilteredLines(filteredLines)
   }, [lines, filterHearingImpaired, filterLyrics])
-
 
   const handleApplyAllRemove = () => {
     const updatedLines = [...lines];
