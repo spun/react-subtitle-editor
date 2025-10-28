@@ -17,5 +17,11 @@ export default defineConfig([
     rules: {
       "react/react-in-jsx-scope": "off"
     },
+    // Fix "Warning: React version not specified"
+    settings: {
+      react: {
+        version: "detect"
+      }
+    }
   }
 ]);
