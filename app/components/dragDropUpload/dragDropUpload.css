@@ -1,12 +1,12 @@
 .dragDropUpload {
+  /* Hardcoded padding to replace with a border when dragging */
+  padding: 4px;
 
   &.dragging {
+    border: 4px dashed var(--color-primary);
+    padding: 0px;
+
     .uploadForm {
-      /* 
-      Differentiate between uploadForm and mainContent dragging border
-      to avoid showing a vertical scrollbar in uploadForm.
-      */
-      border: 4px dashed var(--color-primary);
       box-sizing: border-box;
 
       .dropCircle {
@@ -28,16 +28,8 @@
       to avoid showing a vertical scrollbar in uploadForm.
       */
       min-height: 100dvh;
-      padding: 0px;
-      border: 4px dashed var(--color-primary);
       box-sizing: border-box;
-
     }
-  }
-
-  .mainContent {
-    /* Hardcoded padding to replace with a border when dragging */
-    padding: 4px;
   }
 
   .uploadForm {

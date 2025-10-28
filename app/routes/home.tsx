@@ -117,11 +117,15 @@ export default function Home() {
         :root will search for this class name and apply the correct theme 
       */}
       <div className={theme} />
-      <DragDropUpload showForm={currentSubtitle == null} onUpload={handleUpload}>
+      <DragDropUpload
+        showForm={currentSubtitle == null}
+        onUpload={handleUpload}
+        appBar={
+          <AppBar theme={theme} setTheme={setTheme} isFileOpen={currentSubtitle != null} onClose={handleClose} />
+        }
+      >
         {currentSubtitle != null &&
           <>
-            <AppBar theme={theme} setTheme={setTheme} onClose={handleClose} />
-
             <main>
               { /* File info block. Name, num lines, export, etc.*/}
               <FileInfo file={currentSubtitle} onExport={handleExport} />
