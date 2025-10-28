@@ -1,14 +1,18 @@
 import type { SubtitleFile } from "~/models/SubtitleFile";
-import type { SubtitleLine } from "~/models/SubtitleLine";
+import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
 
-function printSubtitleLineAsSrtLine(line: SubtitleLine): string {
-  return `${line.index}\r\n${line.startTime} --> ${line.endTime}\r\n${line.text}`
+function printSubtitleLineAsSrtLine(number: number, line: SubtitleLine): string {
+  const lineText = line.state == LineState.MODIFIED ? line.updatedText : line.text
+  return `${number}\r\n${line.startTime} --> ${line.endTime}\r\n${lineText}`
 }
 
 export function downloadSubtitleAsSrt(subtitleFile: SubtitleFile) {
   if (subtitleFile == null) return
   const lines = subtitleFile.lines
-  const content = lines.map(line => printSubtitleLineAsSrtLine(line)).join('\r\n\r\n') + '\r\n';
+  const content = lines
+    .filter(l => l.state != LineState.REMOVED)
+    .map((line, index) => printSubtitleLineAsSrtLine(index + 1, line))
+    .join('\r\n\r\n') + '\r\n';
   const blob = new Blob([content], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   // Create a temporary <a> element

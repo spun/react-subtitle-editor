@@ -4,7 +4,8 @@ import { updateLinesFromSubtitleFile, updateSelectedLineFromSubtitleFile, update
 
 export enum ActionPane {
   Lines = "LINES",
-  Sync = "SYNC"
+  Sync = "SYNC",
+  RegexFilter = "REGEX_FILTER"
 }
 
 export type AppState = {

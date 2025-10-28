@@ -43,6 +43,11 @@
   --color-surface-container: #E5EAE2;
   --color-surface-container-high: #E3E8DF;
   --color-surface-container-highest: #DFE5DB;
+
+  --color-delete-action: #c3625d;
+  --color-on-delete-action: #facccc;
+  --color-undo-action: #6386d0;
+  --color-on-undo-action: #c4d4f7;
 }
 
 /* Define the color variables for the dark theme */
@@ -84,6 +89,11 @@
     --color-surface-container: #22281E;
     --color-surface-container-high: #242A1F;
     --color-surface-container-highest: #262E21;
+
+    --color-delete-action: #c3625d;
+    --color-on-delete-action: #facccc;
+    --color-undo-action: #6386d0;
+    --color-on-undo-action: #c4d4f7;
   }
 }
 
@@ -109,64 +119,6 @@ main {
   gap: 8px;
 }
 
-.button {
-  font-weight: bold;
-  border-radius: 24px;
-  background-color: transparent;
-  color: var(--color-on-primary);
-  padding: 10px 24px;
-  cursor: pointer;
-  border: 0;
-
-  &.textButton {
-    color: var(--color-primary);
-
-    &:hover {
-      background-color: var(--color-surface-variant);
-    }
-  }
-
-  &.outlinedButton {
-    border: 1px solid var(--color-outline);
-    color: var(--color-primary);
-
-    &:hover {
-      background-color: var(--color-surface-variant);
-    }
-  }
-
-  &.filledButton {
-    background-color: var(--color-primary);
-
-    &:hover {
-      background-color: var(--color-secondary);
-      color: var(--color-on-secondary);
-    }
-  }
-}
-
-.fileInfo {
-  padding: 8px 24px 24px 24px;
-  background-color: var(--color-surface);
-  color: var(--color-on-surface);
-  border-radius: 24px;
-
-  h2 {
-    color: var(--color-primary);
-  }
-
-  p span {
-    font-weight: bold;
-    line-height: 28px;
-    display: block;
-    margin: 0;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-  }
-}
 
 .filterActionWrapper {
   padding: 24px 0;
@@ -192,12 +144,35 @@ main {
   }
 }
 
+
+.regexFilterWrapper {
+  padding: 8px 24px 0 24px;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  border-radius: 24px;
+
+  h3 {
+    color: var(--color-primary);
+  }
+
+  .actions {
+    padding: 24px 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
+
+
 .lineList {
   margin: 0;
   padding: 0;
   list-style: none;
 
   .linePreview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--color-surface);
     color: var(--color-on-surface);
     font-size: .85em;
@@ -205,13 +180,36 @@ main {
     padding: 8px 16px;
     margin-bottom: 2px;
     cursor: pointer;
+    position: relative;
+
+    &.removed::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #ff4c45;
+    }
+
+    &.modified::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #ffa939;
+    }
 
     &:first-child {
-      border-radius: 24px 24px 0 0;
+      border-start-start-radius: 24px;
+      border-start-end-radius: 24px;
     }
 
     &:last-child {
-      border-radius: 0 0 24px 24px;
+      border-end-start-radius: 24px;
+      border-end-end-radius: 24px;
       /* give lineEditor space */
       margin-bottom: 250px;
     }
@@ -230,19 +228,83 @@ main {
       }
     }
 
-    .info {
-      color: color-mix(in srgb, currentColor 70%, var(--color-surface));
+    .lineContent {
+      /* This will block the text from pushing our
+       actions outside the container as it grows */
+      min-width: 0;
 
-      .timestamp {
+      .info {
+        color: color-mix(in srgb, currentColor 70%, var(--color-surface));
+
+        .timestamp {
+          font-size: 1.2em;
+          font-family: monospace;
+          margin: 0 8px
+        }
+      }
+
+      .content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: pre;
         font-size: 1.2em;
-        font-family: monospace;
-        margin: 0 8px
       }
     }
 
-    .content {
-      white-space: pre;
-      font-size: 1.2em;
+    .lineActions {
+      display: flex;
+      gap: 4px;
+
+      .actionDelete {
+        background-color: transparent;
+        color: var(--color-delete-action);
+
+        &:hover {
+          color: var(--color-on-delete-action);
+          background-color: var(--color-delete-action);
+        }
+      }
+
+      .actionApply,
+      .actionUndo {
+        background-color: transparent;
+        color: var(--color-undo-action);
+
+        &:hover {
+          background-color: var(--color-undo-action);
+          color: var(--color-on-undo-action);
+        }
+      }
     }
+  }
+}
+
+.matchHighlight {
+  padding: 0 2px;
+  border-radius: 4px;
+
+  &:has(+ .matchHighlight) {
+    border-start-end-radius: 0px;
+    border-end-end-radius: 0px;
+  }
+
+  +.matchHighlight {
+    border-start-start-radius: 0px;
+    border-end-start-radius: 0px;
+  }
+
+  &.cc {
+    background-color: #ff6961;
+    color: black;
+  }
+
+  &.lyrics {
+    background-color: #3A6ACB;
+    color: black;
+  }
+
+  &.cc.lyrics {
+    background-color: #de83f5;
+    color: black;
   }
 }
