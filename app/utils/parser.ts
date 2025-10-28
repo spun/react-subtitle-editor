@@ -79,7 +79,7 @@ class Parser {
   private fixed_str_digit(
     how_many_digit: number,
     str: string,
-    padEnd: boolean = true
+    padEnd = true
   ) {
     if (str.length == how_many_digit) {
       return str;
@@ -140,12 +140,11 @@ class Parser {
     return items;
   }
 
-  toSrt(data: Array<Line>) {
+  toSrt(data: Line[]) {
     let res = "";
 
     const end_of_line = "\r\n";
-    for (let i = 0; i < data.length; i++) {
-      const s = data[i];
+    for (const s of data) {
       res += s.id + end_of_line;
       res += s.startTime + " --> " + s.endTime + end_of_line;
       res += s.text.replace("\n", end_of_line) + end_of_line + end_of_line;

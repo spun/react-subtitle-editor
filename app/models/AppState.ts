@@ -8,7 +8,7 @@ export enum ActionPane {
   RegexFilter = "REGEX_FILTER"
 }
 
-export type AppState = {
+export interface AppState {
   currentSubtitle: SubtitleFile | null,
   selectedPane: ActionPane,
 }

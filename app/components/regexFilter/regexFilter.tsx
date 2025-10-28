@@ -24,7 +24,7 @@ const lyricsRegExps = [
  * multiple LineChunk when we use regex to
  * remove part of the line.
  */
-type LineChunk = {
+interface LineChunk {
   text: string;
   types: string[] | null;
 }
@@ -35,7 +35,7 @@ type LineChunk = {
  * chunks that where a match against our
  * regexps.
  */
-type HighlightedLine = {
+interface HighlightedLine {
   id: number,
   chunks: LineChunk[],
   resultLine: string,

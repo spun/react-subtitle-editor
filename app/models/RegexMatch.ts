@@ -1,6 +1,6 @@
 import { arraysHaveSameElements } from "~/utils/arraysCompare";
 
-export type RegexMatch = {
+export interface RegexMatch {
   start: number,
   end: number
 }

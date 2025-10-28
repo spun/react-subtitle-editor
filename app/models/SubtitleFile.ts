@@ -12,7 +12,7 @@ export class NoLineSelectedError extends Error {
   }
 }
 
-export type SubtitleFile = {
+export interface SubtitleFile {
   filename: string;
   lines: SubtitleLine[];
   selectedLineIndex: number | null;
