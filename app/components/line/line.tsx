@@ -13,7 +13,7 @@ interface LineProps {
 export function Line({ className, value, onClick, onUndo, onDelete }: LineProps) {
 
   return (
-    <li className={'linePreview ' + (`${className} ` || '') + (value.state === LineState.REMOVED ? 'removed ' : '') + (value.state === LineState.MODIFIED ? 'modified ' : '')} onClick={onClick}>
+    <li className={'linePreview ' + (className ? `${className} ` : '') + (value.state === LineState.REMOVED ? 'removed ' : '') + (value.state === LineState.MODIFIED ? 'modified ' : '')} onClick={onClick}>
       <div className="lineContent">
         <p className="info">#{value.id} <span className="timestamp">{value.startTime}</span> ➔ <span className="timestamp">{value.endTime}</span></p>
         <p className="content" >{value.state == LineState.MODIFIED ? value.updatedText : value.text}</p>

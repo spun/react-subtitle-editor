@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import type { Route } from "./+types/home";
 import { ActionPane, updateCurrentSubtitleFromAppState, updateLinesFromAppState, updateSelectedLineFromAppState, updateSelectedLineIndexFromAppState, updateSelectedPaneFromAppState, type AppState } from "~/models/AppState";
-import { updateLineFromSubtitleFile, updateSelectedLineIndexFromSubtitleFile, type SubtitleFile } from '~/models/SubtitleFile';
+import { updateLineFromSubtitleFile, type SubtitleFile } from '~/models/SubtitleFile';
 import { LineState, updateStateFromSubtitleLine, updateTimesFromSubtitleLine, type SubtitleLine } from "~/models/SubtitleLine";
 import { downloadSubtitleAsSrt } from '~/utils/export';
 import { DragDropUpload } from '~/components/dragDropUpload/dragDropUpload';
@@ -15,7 +14,7 @@ import { FileInfo } from '~/components/fileInfo/fileInfo';
 import { AppBar } from '~/components/appBar/appBar';
 import { useTheme } from '~/utils/useTheme';
 
-export function meta({ }: Route.MetaArgs) {
+export function meta(/*{ }: Route.MetaArgs*/) {
   return [
     { title: "Online subtitle editor" },
     { name: "description", content: "Edit srt subtitles from your browser." },

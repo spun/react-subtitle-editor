@@ -1,7 +1,6 @@
 import type { ChangeEvent } from "react"
 import { LineState, type SubtitleLine } from "../../models/SubtitleLine";
 import "./lineEditor.css";
-import { Line } from "../line/line";
 
 interface LineEditorProps {
   line: SubtitleLine;

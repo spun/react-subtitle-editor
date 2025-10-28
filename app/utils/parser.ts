@@ -34,19 +34,19 @@ class Parser {
     // 00:00:28,0    Become 00:00:28,000
     // 00:00:28,01   Become 00:00:28,010
     // 0:00:10,500   Become 00:00:10,500
-    let str = time.replace(".", ",");
+    const str = time.replace(".", ",");
 
-    var hour = null;
-    var minute = null;
-    var second = null;
-    var millisecond = null;
+    let hour = null;
+    let minute = null;
+    let second = null;
+    let millisecond = null;
 
     // Handle millisecond
-    var [front, ms] = str.split(",");
+    const [front, ms] = str.split(",");
     millisecond = this.fixed_str_digit(3, ms);
 
     // Handle hour
-    var [a_hour, a_minute, a_second] = front.split(":");
+    const [a_hour, a_minute, a_second] = front.split(":");
     hour = this.fixed_str_digit(2, a_hour, false);
     minute = this.fixed_str_digit(2, a_minute, false);
     second = this.fixed_str_digit(2, a_second, false);
@@ -98,35 +98,35 @@ class Parser {
 
   private tryComma(data: string) {
     data = data.replace(/\r/g, "");
-    var regex =
+    const regex =
       /(\d+)\n(\d{1,2}:\d{1,2}:\d{1,2},\d{1,4}) --> (\d{1,2}:\d{1,2}:\d{1,2},\d{1,4})/g;
-    let data_array = data.split(regex);
+    const data_array = data.split(regex);
     data_array.shift(); // remove first '' in array
     return data_array;
   }
 
   private tryDot(data: string) {
     data = data.replace(/\r/g, "");
-    var regex =
+    const regex =
       /(\d+)\n(\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,4}) --> (\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,4})/g;
-    let data_array = data.split(regex);
+    const data_array = data.split(regex);
     data_array.shift(); // remove first '' in array
     this.separator = ".";
     return data_array;
   }
 
   fromSrt(data: string) {
-    var originalData = data;
-    var data_array = this.tryComma(originalData);
+    const originalData = data;
+    let data_array = this.tryComma(originalData);
     if (data_array.length == 0) {
       data_array = this.tryDot(originalData);
     }
 
-    var items = [];
-    for (var i = 0; i < data_array.length; i += 4) {
+    const items = [];
+    for (let i = 0; i < data_array.length; i += 4) {
       const startTime = this.correctFormat(data_array[i + 1].trim());
       const endTime = this.correctFormat(data_array[i + 2].trim());
-      var new_line = {
+      const new_line = {
         id: data_array[i].trim(),
         startTime,
         startSeconds: this.timestampToSeconds(startTime),
@@ -141,11 +141,11 @@ class Parser {
   }
 
   toSrt(data: Array<Line>) {
-    var res = "";
+    let res = "";
 
     const end_of_line = "\r\n";
-    for (var i = 0; i < data.length; i++) {
-      var s = data[i];
+    for (let i = 0; i < data.length; i++) {
+      const s = data[i];
       res += s.id + end_of_line;
       res += s.startTime + " --> " + s.endTime + end_of_line;
       res += s.text.replace("\n", end_of_line) + end_of_line + end_of_line;

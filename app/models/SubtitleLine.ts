@@ -64,7 +64,7 @@ export function updateTimesFromSubtitleLine(
 
 export function updateStateFromSubtitleLine(
   subtitleLine: SubtitleLine,
-  state: LineState,
+  state: LineState.ENABLED | LineState.REMOVED,
 ): SubtitleLine {
   return {
     ...subtitleLine,

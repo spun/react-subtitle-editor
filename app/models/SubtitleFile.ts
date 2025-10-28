@@ -1,4 +1,4 @@
-import { updateTimesFromSubtitleLine, type SubtitleLine } from './SubtitleLine'
+import type { SubtitleLine } from './SubtitleLine'
 
 export class NoLineSelectedError extends Error {
   constructor(

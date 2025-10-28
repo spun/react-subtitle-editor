@@ -1,8 +1,8 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useEffect, useState } from "react";
 import { getRegexMatches, mergeRegexMatchesWithAnnotation as mergeRegexMatchesWithAnnotations, mergeRegexMatches, type AnnotatedRegexMatch, type RegexMatch } from "~/models/RegexMatch";
 import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
-import { FilledButton, IconButton, OutlinedButton, TextButton } from "../buttons/buttons";
-import { ApplyAllIcon, ApplyIcon, DeleteIcon } from "../icons/icons";
+import { IconButton, OutlinedButton } from "../buttons/buttons";
+import { ApplyAllIcon, ApplyIcon } from "../icons/icons";
 
 const hearingImpairedRegExps = [
   // Any string wrapped in between brackets
@@ -244,8 +244,4 @@ function ChunkedLine({ chunks, onClick }: ChunkedLineProps) {
       </div>
     </>
   )
-}
-
-interface LineActionProps {
-  onClick: () => void;
 }
