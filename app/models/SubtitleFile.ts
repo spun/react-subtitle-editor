@@ -53,7 +53,7 @@ export function updateSelectedLineFromSubtitleFile(
   subtitleLine: SubtitleLine
 ): SubtitleFile {
   const selectedLineIndex = subtitleFile.selectedLineIndex
-  if (selectedLineIndex != null) {
+  if (selectedLineIndex !== null) {
     return updateLineFromSubtitleFile(subtitleFile, subtitleLine, selectedLineIndex)
   } else {
     throw new NoLineSelectedError()

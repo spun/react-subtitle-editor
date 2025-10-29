@@ -131,9 +131,9 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
         // We now have a way to highlight the words that got a match but we also
         // want to display how the line is going to look when those words are
         // removed.
-        if (chunks.length > 1 || chunks[0]?.types != null) {
+        if (chunks.length > 1 || chunks[0]?.types !== null) {
           const finalLine: string = chunks
-            .filter((s) => s.types == null) // Keep only non-annotated chunks
+            .filter((s) => s.types === null) // Keep only non-annotated chunks
             .map((s) => s.text)             // Get the text
             .join("")                       // Join chunk without any separator
             .replace(/\s{2,}/g, ' ')        // collapse multiple spaces

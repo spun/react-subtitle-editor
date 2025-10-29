@@ -38,7 +38,7 @@ export function updateSelectedLineIndexFromAppState(
   selectedLineIndex: number | null
 ): AppState {
   const currentSubtitle = appState.currentSubtitle
-  if (currentSubtitle != null) {
+  if (currentSubtitle !== null) {
     return {
       ...appState,
       currentSubtitle: updateSelectedLineIndexFromSubtitleFile(currentSubtitle, selectedLineIndex)
@@ -53,7 +53,7 @@ export function updateLinesFromAppState(
   lines: SubtitleLine[]
 ): AppState {
   const currentSubtitle = appState.currentSubtitle
-  if (currentSubtitle != null) {
+  if (currentSubtitle !== null) {
     return {
       ...appState,
       currentSubtitle: updateLinesFromSubtitleFile(currentSubtitle, lines)
@@ -69,7 +69,7 @@ export function updateSelectedLineFromAppState(
   subtitleLine: SubtitleLine
 ): AppState {
   const currentSubtitle = appState.currentSubtitle
-  if (currentSubtitle != null) {
+  if (currentSubtitle !== null) {
     return {
       ...appState,
       currentSubtitle: updateSelectedLineFromSubtitleFile(currentSubtitle, subtitleLine)

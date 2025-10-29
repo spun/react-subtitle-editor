@@ -30,7 +30,8 @@ export default defineConfig([
   reactHooks.configs.flat.recommended,
   {
     rules: {
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
+      "eqeqeq": ["error", "always"],
     },
     // Fix "Warning: React version not specified"
     settings: {

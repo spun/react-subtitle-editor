@@ -77,7 +77,7 @@ class Parser {
     str: string,
     padEnd = true
   ) {
-    if (str.length == how_many_digit) {
+    if (str.length === how_many_digit) {
       return str;
     }
     if (str.length > how_many_digit) {
@@ -114,7 +114,7 @@ class Parser {
   fromSrt(data: string) {
     const originalData = data;
     let data_array = this.tryComma(originalData);
-    if (data_array.length == 0) {
+    if (data_array.length === 0) {
       data_array = this.tryDot(originalData);
     }
 
