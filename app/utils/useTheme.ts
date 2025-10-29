@@ -12,7 +12,7 @@ export function useTheme(defaultValue: Theme = "system") {
   });
 
   // Update localStorage whenever theme changes
-  useEffect(() => localStorage.setItem("theme", theme), [theme]);
+  useEffect(() => { localStorage.setItem("theme", theme) }, [theme]);
 
   // Listen for theme changes in other tabs or windows
   useEffect(() => {
@@ -25,7 +25,7 @@ export function useTheme(defaultValue: Theme = "system") {
     };
 
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    return () => { window.removeEventListener("storage", onStorage) }
   }, []);
 
   return [theme, setTheme] as const;

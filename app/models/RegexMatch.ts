@@ -112,7 +112,7 @@ export function mergeRegexMatchesWithAnnotation(
     if (inB) types.push(annotationB)
 
     // Merge with previous if same type
-    const last = result[result.length - 1];
+    const last = result.at(result.length - 1);
     if (last && arraysHaveSameElements(last.types, types) && last.end === start) {
       last.end = end;
     } else {

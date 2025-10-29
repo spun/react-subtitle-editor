@@ -161,9 +161,9 @@ export default function Home() {
                             key={index}
                             className={isSelected ? "selected" : ""}
                             value={line}
-                            onClick={() => handleLineSelection(index)}
-                            onUndo={() => handleLineUndo(index)}
-                            onDelete={() => handleLineDeletion(index)} />
+                            onClick={() => { handleLineSelection(index) }}
+                            onUndo={() => { handleLineUndo(index) }}
+                            onDelete={() => { handleLineDeletion(index) }} />
                         )
                       })
                     }

@@ -14,7 +14,7 @@ interface ButtonProps extends BaseButtonProps {
 function BaseButton({ className, children, onClick, leadingIcon: LeadingIcon }: ButtonProps) {
   return (
     <button
-      className={`button ${LeadingIcon ? `withIcon ` : ''} ${className || ''}`}
+      className={`button ${LeadingIcon ? `withIcon ` : ''} ${className ?? ''}`}
       onClick={onClick}
     >
       {LeadingIcon && <LeadingIcon />}{children}
@@ -25,7 +25,7 @@ function BaseButton({ className, children, onClick, leadingIcon: LeadingIcon }: 
 export function FilledButton({ className, children, onClick, leadingIcon }: ButtonProps) {
   return (
     <BaseButton
-      className={`filledButton ${className || ''}`}
+      className={`filledButton ${className ?? ''}`}
       leadingIcon={leadingIcon}
       onClick={onClick}
     >
@@ -37,7 +37,7 @@ export function FilledButton({ className, children, onClick, leadingIcon }: Butt
 export function TextButton({ className, children, onClick, leadingIcon }: ButtonProps) {
   return (
     <BaseButton
-      className={`textButton ${className || ''}`}
+      className={`textButton ${className ?? ''}`}
       leadingIcon={leadingIcon}
       onClick={onClick}
     >
@@ -49,7 +49,7 @@ export function TextButton({ className, children, onClick, leadingIcon }: Button
 export function OutlinedButton({ className, children, onClick, leadingIcon }: ButtonProps) {
   return (
     <BaseButton
-      className={`outlinedButton ${className || ''}`}
+      className={`outlinedButton ${className ?? ''}`}
       leadingIcon={leadingIcon}
       onClick={onClick}
     >
@@ -69,7 +69,7 @@ export function IconButton({ className, children, onClick }: BaseButtonProps) {
 
   return (
     <button
-      className={`iconButton filledButton ${className || ''}`}
+      className={`iconButton filledButton ${className ?? ''}`}
       onClick={handleClick}
     >
       {children}

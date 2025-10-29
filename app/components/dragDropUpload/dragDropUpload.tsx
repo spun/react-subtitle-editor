@@ -24,8 +24,8 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
   const handleFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const srtString = reader.result?.toString()
-      if (srtString) {
+      const srtString = reader.result
+      if (srtString && typeof srtString === "string") {
         const parsedLines = srtParser.fromSrt(srtString)
         onUpload({
           filename: file.name,
@@ -78,8 +78,8 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
     dragCounter.current = 0
     setIsDragging(false);
     // handle file
-    const files = e.dataTransfer?.files;
-    if (files && files.length > 0) {
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
       const file = files[0];
       handleFile(file)
     }

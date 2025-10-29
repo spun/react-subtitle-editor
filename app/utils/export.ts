@@ -3,11 +3,10 @@ import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
 
 function printSubtitleLineAsSrtLine(number: number, line: SubtitleLine): string {
   const lineText = line.state == LineState.MODIFIED ? line.updatedText : line.text
-  return `${number}\r\n${line.startTime} --> ${line.endTime}\r\n${lineText}`
+  return `${String(number)}\r\n${line.startTime} --> ${line.endTime}\r\n${lineText}`
 }
 
 export function downloadSubtitleAsSrt(subtitleFile: SubtitleFile) {
-  if (subtitleFile == null) return
   const lines = subtitleFile.lines
   const content = lines
     .filter(l => l.state != LineState.REMOVED)

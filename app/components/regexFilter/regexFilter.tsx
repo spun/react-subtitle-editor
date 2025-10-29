@@ -187,12 +187,12 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
     <>
       <p>
         <label>
-          <input type="checkbox" checked={filterHearingImpaired} onChange={e => setFilterHearingImpaired(e.target.checked)} />Hearing impaired
+          <input type="checkbox" checked={filterHearingImpaired} onChange={e => { setFilterHearingImpaired(e.target.checked) }} />Hearing impaired
         </label>
       </p>
       <p>
         <label>
-          <input type="checkbox" checked={filterLyrics} onChange={e => setFilterLyrics(e.target.checked)} />Lyrics
+          <input type="checkbox" checked={filterLyrics} onChange={e => { setFilterLyrics(e.target.checked) }} />Lyrics
         </label>
       </p>
       <div className="actions">
@@ -204,7 +204,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
           filteredLines.map((line, index) => {
             return (
               <li className="linePreview" key={index} >
-                <ChunkedLine chunks={line.chunks} onClick={() => handleApplyLineRemove(line)} />
+                <ChunkedLine chunks={line.chunks} onClick={() => { handleApplyLineRemove(line) }} />
               </li>
             )
           })

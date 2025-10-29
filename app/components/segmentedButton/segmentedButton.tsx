@@ -27,7 +27,7 @@ export function SegmentedButton<T>({ options, selected, onSelected: onOptionSele
             <li
               key={option.key}
               className={isSelected ? "selected" : ""}
-              onClick={() => handleOptionSelected(option.id)}>
+              onClick={() => { handleOptionSelected(option.id) }}>
               {option.text}
             </li>
           )

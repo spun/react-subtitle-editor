@@ -36,22 +36,18 @@ class Parser {
     // 0:00:10,500   Become 00:00:10,500
     const str = time.replace(".", ",");
 
-    let hour = null;
-    let minute = null;
-    let second = null;
-    let millisecond = null;
 
     // Handle millisecond
     const [front, ms] = str.split(",");
-    millisecond = this.fixed_str_digit(3, ms);
+    const millisecond = this.fixed_str_digit(3, ms);
 
     // Handle hour
     const [a_hour, a_minute, a_second] = front.split(":");
-    hour = this.fixed_str_digit(2, a_hour, false);
-    minute = this.fixed_str_digit(2, a_minute, false);
-    second = this.fixed_str_digit(2, a_second, false);
+    const hour = this.fixed_str_digit(2, a_hour, false);
+    const minute = this.fixed_str_digit(2, a_minute, false);
+    const second = this.fixed_str_digit(2, a_second, false);
 
-    return `${hour}:${minute}:${second},${millisecond}`;
+    return `${String(hour)}:${String(minute)}:${String(second)},${String(millisecond)}`;
   }
 
   /*

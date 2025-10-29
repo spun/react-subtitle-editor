@@ -38,17 +38,17 @@ export function TimeInput({ onSyncRequest }: TimeInputProps) {
       <p>
         Minutes:
         <br />
-        <input type="range" value={minutes} min="0" max="59" onChange={e => setMinutes(Number(e.target.value))} />
+        <input type="range" value={minutes} min="0" max="59" onChange={e => { setMinutes(Number(e.target.value)) }} />
       </p>
       <p>
         Seconds:
         <br />
-        <input type="range" value={seconds} min="0" max="59" onChange={e => setSeconds(Number(e.target.value))} />
+        <input type="range" value={seconds} min="0" max="59" onChange={e => { setSeconds(Number(e.target.value)) }} />
       </p>
       <p>
         Milliseconds:
         <br />
-        <input type="range" value={millis} min="0" max="999" onChange={e => setMillis(Number(e.target.value))} />
+        <input type="range" value={millis} min="0" max="999" onChange={e => { setMillis(Number(e.target.value)) }} />
       </p>
       <NumberInput value={hours} min={0} max={99} onChange={setHours} />:
       <NumberInput value={minutes} min={0} max={59} onChange={setMinutes} />:
