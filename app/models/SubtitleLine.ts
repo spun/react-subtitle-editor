@@ -7,7 +7,7 @@ export enum LineState {
 /**
  * Represents a line from an srt file
  */
-type BaseSubtitleLine = {
+interface BaseSubtitleLine {
   /**
    * The actual position of the line in the file (starting at 1),
    * regardless of the index indicated in the line.
@@ -64,7 +64,7 @@ export function updateTimesFromSubtitleLine(
 
 export function updateStateFromSubtitleLine(
   subtitleLine: SubtitleLine,
-  state: LineState,
+  state: LineState.ENABLED | LineState.REMOVED,
 ): SubtitleLine {
   return {
     ...subtitleLine,

@@ -1,8 +1,8 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useMemo, useState } from "react";
 import { getRegexMatches, mergeRegexMatchesWithAnnotation as mergeRegexMatchesWithAnnotations, mergeRegexMatches, type AnnotatedRegexMatch, type RegexMatch } from "~/models/RegexMatch";
 import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
-import { FilledButton, IconButton, OutlinedButton, TextButton } from "../buttons/buttons";
-import { ApplyAllIcon, ApplyIcon, DeleteIcon } from "../icons/icons";
+import { IconButton, OutlinedButton } from "../buttons/buttons";
+import { ApplyAllIcon, ApplyIcon } from "../icons/icons";
 
 const hearingImpairedRegExps = [
   // Any string wrapped in between brackets
@@ -24,7 +24,7 @@ const lyricsRegExps = [
  * multiple LineChunk when we use regex to
  * remove part of the line.
  */
-type LineChunk = {
+interface LineChunk {
   text: string;
   types: string[] | null;
 }
@@ -35,7 +35,7 @@ type LineChunk = {
  * chunks that where a match against our
  * regexps.
  */
-type HighlightedLine = {
+interface HighlightedLine {
   id: number,
   chunks: LineChunk[],
   resultLine: string,
@@ -93,10 +93,9 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
   const [filterHearingImpaired, setFilterHearingImpaired] = useState(false)
   const [filterLyrics, setFilterLyrics] = useState(false)
-  const [filteredLines, setFilteredLines] = useState<HighlightedLine[]>([])
 
-  useEffect(() => {
-    const filteredLines = lines
+  const filteredLines = useMemo(() => {
+    return lines
       .filter(l => l.state === LineState.ENABLED)
       .reduce<HighlightedLine[]>((acc, line) => {
 
@@ -132,9 +131,9 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
         // We now have a way to highlight the words that got a match but we also
         // want to display how the line is going to look when those words are
         // removed.
-        if (chunks.length > 1 || chunks[0]?.types != null) {
+        if (chunks.length > 1 || chunks[0]?.types !== null) {
           const finalLine: string = chunks
-            .filter((s) => s.types == null) // Keep only non-annotated chunks
+            .filter((s) => s.types === null) // Keep only non-annotated chunks
             .map((s) => s.text)             // Get the text
             .join("")                       // Join chunk without any separator
             .replace(/\s{2,}/g, ' ')        // collapse multiple spaces
@@ -149,10 +148,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
         return acc
       }, [])
-
-    setFilteredLines(filteredLines)
   }, [lines, filterHearingImpaired, filterLyrics])
-
 
   const handleApplyAllRemove = () => {
     const updatedLines = [...lines];
@@ -191,12 +187,12 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
     <>
       <p>
         <label>
-          <input type="checkbox" checked={filterHearingImpaired} onChange={e => setFilterHearingImpaired(e.target.checked)} />Hearing impaired
+          <input type="checkbox" checked={filterHearingImpaired} onChange={e => { setFilterHearingImpaired(e.target.checked) }} />Hearing impaired
         </label>
       </p>
       <p>
         <label>
-          <input type="checkbox" checked={filterLyrics} onChange={e => setFilterLyrics(e.target.checked)} />Lyrics
+          <input type="checkbox" checked={filterLyrics} onChange={e => { setFilterLyrics(e.target.checked) }} />Lyrics
         </label>
       </p>
       <div className="actions">
@@ -208,7 +204,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
           filteredLines.map((line, index) => {
             return (
               <li className="linePreview" key={index} >
-                <ChunkedLine chunks={line.chunks} onClick={() => handleApplyLineRemove(line)} />
+                <ChunkedLine chunks={line.chunks} onClick={() => { handleApplyLineRemove(line) }} />
               </li>
             )
           })
@@ -244,8 +240,4 @@ function ChunkedLine({ chunks, onClick }: ChunkedLineProps) {
       </div>
     </>
   )
-}
-
-interface LineActionProps {
-  onClick: () => void;
 }

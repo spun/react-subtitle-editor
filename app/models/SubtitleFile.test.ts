@@ -5,7 +5,7 @@ import { LineState } from "./SubtitleLine";
 const initialSubtitleFile: SubtitleFile = {
   filename: "subtitle.srt",
   lines: [{
-    index: 1,
+    id: 1,
     startTime: "00:00:01,100",
     startTimeMillis: 1100,
     endTime: "00:00:02,200",
@@ -13,7 +13,7 @@ const initialSubtitleFile: SubtitleFile = {
     text: "line text 1",
     state: LineState.ENABLED
   }, {
-    index: 2,
+    id: 2,
     startTime: "00:00:03,300",
     startTimeMillis: 3300,
     endTime: "00:00:04,400",

@@ -5,7 +5,7 @@ describe('SubtitleLine', () => {
 
   test('line state is updated', () => {
     const initial: SubtitleLine = {
-      index: 1,
+      id: 1,
       startTime: "00:00:01,100",
       startTimeMillis: 1.1,
       endTime: "00:00:2,200",
@@ -20,7 +20,7 @@ describe('SubtitleLine', () => {
 
   test('line times are updated with positive delta', () => {
     const initial: SubtitleLine = {
-      index: 1,
+      id: 1,
       startTime: "00:00:01,100",
       startTimeMillis: 1100,
       endTime: "00:00:02,200",
@@ -31,7 +31,7 @@ describe('SubtitleLine', () => {
     const delta = 3661100 // add 1h 1min 1sec 100ms
     const updatedLine = updateTimesFromSubtitleLine(initial, delta)
     expect(updatedLine).toEqual({
-      index: 1,
+      id: 1,
       startTime: "01:01:02,200",
       startTimeMillis: 3662200,
       endTime: "01:01:03,300",
@@ -43,7 +43,7 @@ describe('SubtitleLine', () => {
 
   test('line times are updated with negative delta', () => {
     const initial: SubtitleLine = {
-      index: 1,
+      id: 1,
       startTime: "01:01:02,200",
       startTimeMillis: 3662200,
       endTime: "01:01:03,300",
@@ -54,7 +54,7 @@ describe('SubtitleLine', () => {
     const delta = -3661100 // remove 1h 1min 1sec 100ms
     const updatedLine = updateTimesFromSubtitleLine(initial, delta)
     expect(updatedLine).toEqual({
-      index: 1,
+      id: 1,
       startTime: "00:00:01,100",
       startTimeMillis: 1100,
       endTime: "00:00:02,200",
@@ -68,7 +68,7 @@ describe('SubtitleLine', () => {
 
   test('line state updates return new object', () => {
     const initial: SubtitleLine = {
-      index: 1,
+      id: 1,
       startTime: "00:00:01,100",
       startTimeMillis: 1.1,
       endTime: "00:00:2,200",
@@ -84,7 +84,7 @@ describe('SubtitleLine', () => {
 
   test('line times updates return new object', () => {
     const initial: SubtitleLine = {
-      index: 1,
+      id: 1,
       startTime: "00:00:01,100",
       startTimeMillis: 1100,
       endTime: "00:00:02,200",

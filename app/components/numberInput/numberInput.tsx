@@ -10,11 +10,13 @@ interface NumberInputProps {
 export function NumberInput({ value, onChange, min: minValue, max: maxValue }: NumberInputProps) {
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const valueAsNumberRef = useRef(Number(value))
+  // Store `value` in a ref so our event listener effect can access the latest number without
+  // adding `value` as a dependency, which would recreate the listener each time `value` changes.
+  const valueRef = useRef(value)
 
   // Keep ref updated with latest value
   useEffect(() => {
-    valueAsNumberRef.current = Number(value)
+    valueRef.current = value
   }, [value])
 
   // Clamp number between min and max
@@ -33,7 +35,7 @@ export function NumberInput({ value, onChange, min: minValue, max: maxValue }: N
     }
 
     // update value
-    const currentValue = valueAsNumberRef.current
+    const currentValue = valueRef.current
     if (!isNaN(currentValue)) {
       const newValue = e.deltaY < 0 ? currentValue + 1 : currentValue - 1
       onChange(applyLimits(newValue))

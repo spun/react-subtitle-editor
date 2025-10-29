@@ -24,20 +24,23 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
   const handleFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const parsedLines = srtParser.fromSrt(reader.result?.toString()!!)
-      onUpload({
-        filename: file.name,
-        lines: parsedLines.map((line, index) => ({
-          id: index + 1,
-          startTime: line.startTime,
-          startTimeMillis: line.startSeconds * 1000,
-          endTime: line.endTime,
-          endTimeMillis: line.endSeconds * 1000,
-          text: line.text,
-          state: LineState.ENABLED
-        })),
-        selectedLineIndex: null
-      })
+      const srtString = reader.result
+      if (srtString && typeof srtString === "string") {
+        const parsedLines = srtParser.fromSrt(srtString)
+        onUpload({
+          filename: file.name,
+          lines: parsedLines.map((line, index) => ({
+            id: index + 1,
+            startTime: line.startTime,
+            startTimeMillis: line.startSeconds * 1000,
+            endTime: line.endTime,
+            endTimeMillis: line.endSeconds * 1000,
+            text: line.text,
+            state: LineState.ENABLED
+          })),
+          selectedLineIndex: null
+        })
+      }
     };
     reader.onerror = () => {
       console.log("Error reading the file. Please try again.", "error");
@@ -75,8 +78,8 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
     dragCounter.current = 0
     setIsDragging(false);
     // handle file
-    const files = e.dataTransfer?.files;
-    if (files && files.length > 0) {
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
       const file = files[0];
       handleFile(file)
     }

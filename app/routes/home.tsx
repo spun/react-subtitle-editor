@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import type { Route } from "./+types/home";
 import { ActionPane, updateCurrentSubtitleFromAppState, updateLinesFromAppState, updateSelectedLineFromAppState, updateSelectedLineIndexFromAppState, updateSelectedPaneFromAppState, type AppState } from "~/models/AppState";
-import { updateLineFromSubtitleFile, updateSelectedLineIndexFromSubtitleFile, type SubtitleFile } from '~/models/SubtitleFile';
+import { updateLineFromSubtitleFile, type SubtitleFile } from '~/models/SubtitleFile';
 import { LineState, updateStateFromSubtitleLine, updateTimesFromSubtitleLine, type SubtitleLine } from "~/models/SubtitleLine";
 import { downloadSubtitleAsSrt } from '~/utils/export';
 import { DragDropUpload } from '~/components/dragDropUpload/dragDropUpload';
@@ -15,7 +14,7 @@ import { FileInfo } from '~/components/fileInfo/fileInfo';
 import { AppBar } from '~/components/appBar/appBar';
 import { useTheme } from '~/utils/useTheme';
 
-export function meta({ }: Route.MetaArgs) {
+export function meta(/*{ }: Route.MetaArgs*/) {
   return [
     { title: "Online subtitle editor" },
     { name: "description", content: "Edit srt subtitles from your browser." },
@@ -44,8 +43,8 @@ export default function Home() {
 
   // Modify selected line to show/hide the line editor
   const handleLineSelection = (lineIndex: number) => {
-    if (currentSubtitle != null) {
-      const newSelectedLineIndex = lineIndex != currentSubtitle.selectedLineIndex ? lineIndex : null
+    if (currentSubtitle !== null) {
+      const newSelectedLineIndex = lineIndex !== currentSubtitle.selectedLineIndex ? lineIndex : null
       const newAppState = updateSelectedLineIndexFromAppState(appState, newSelectedLineIndex)
       setAppState(newAppState)
     }
@@ -53,7 +52,7 @@ export default function Home() {
 
   // Change line state to mark it as removed
   const handleLineUndo = (lineIndex: number) => {
-    if (currentSubtitle != null) {
+    if (currentSubtitle !== null) {
       const line = currentSubtitle.lines[lineIndex]
       const updatedLine = updateStateFromSubtitleLine(line, LineState.ENABLED)
       const updatedFile = updateLineFromSubtitleFile(currentSubtitle, updatedLine, lineIndex)
@@ -64,7 +63,7 @@ export default function Home() {
 
   // Change line state to mark it as removed
   const handleLineDeletion = (lineIndex: number) => {
-    if (currentSubtitle != null) {
+    if (currentSubtitle !== null) {
       const line = currentSubtitle.lines[lineIndex]
       const updatedLine = updateStateFromSubtitleLine(line, LineState.REMOVED)
       const updatedFile = updateLineFromSubtitleFile(currentSubtitle, updatedLine, lineIndex)
@@ -81,7 +80,7 @@ export default function Home() {
 
   // Close file to show the upload form
   const handleClose = () => {
-    if (currentSubtitle != null) {
+    if (currentSubtitle !== null) {
       const newAppState = updateCurrentSubtitleFromAppState(appState, null)
       setAppState(newAppState)
     }
@@ -89,14 +88,14 @@ export default function Home() {
 
   // Create and download a valid srt file with the current list of lines
   const handleExport = () => {
-    if (currentSubtitle != null) {
+    if (currentSubtitle !== null) {
       downloadSubtitleAsSrt(currentSubtitle)
     }
   }
 
   // Add or remove time to all lines
   const handleSyncRequest = (deltaInMillis: number) => {
-    if (currentSubtitle == null) return
+    if (currentSubtitle === null) return
     const lines = currentSubtitle.lines
     const updatedLines = lines.map(line => {
       return updateTimesFromSubtitleLine(line, deltaInMillis)
@@ -118,13 +117,13 @@ export default function Home() {
       */}
       <div className={theme} />
       <DragDropUpload
-        showForm={currentSubtitle == null}
+        showForm={currentSubtitle === null}
         onUpload={handleUpload}
         appBar={
-          <AppBar theme={theme} setTheme={setTheme} isFileOpen={currentSubtitle != null} onClose={handleClose} />
+          <AppBar theme={theme} setTheme={setTheme} isFileOpen={currentSubtitle !== null} onClose={handleClose} />
         }
       >
-        {currentSubtitle != null &&
+        {currentSubtitle !== null &&
           <>
             <main>
               { /* File info block. Name, num lines, export, etc.*/}
@@ -143,7 +142,7 @@ export default function Home() {
               </section>
 
               { /* Display Sync panel. Add or remove time to all lines. */}
-              {appState.selectedPane == ActionPane.Sync &&
+              {appState.selectedPane === ActionPane.Sync &&
                 <section className="timeSyncWrapper">
                   <h3>Sync correction</h3>
                   <TimeInput onSyncRequest={handleSyncRequest} />
@@ -151,7 +150,7 @@ export default function Home() {
               }
 
               { /* Display lines. Edit line by line. */}
-              {appState.selectedPane == ActionPane.Lines &&
+              {appState.selectedPane === ActionPane.Lines &&
                 <section>
                   <ul className="lineList">
                     {
@@ -162,9 +161,9 @@ export default function Home() {
                             key={index}
                             className={isSelected ? "selected" : ""}
                             value={line}
-                            onClick={() => handleLineSelection(index)}
-                            onUndo={() => handleLineUndo(index)}
-                            onDelete={() => handleLineDeletion(index)} />
+                            onClick={() => { handleLineSelection(index) }}
+                            onUndo={() => { handleLineUndo(index) }}
+                            onDelete={() => { handleLineDeletion(index) }} />
                         )
                       })
                     }
@@ -173,7 +172,7 @@ export default function Home() {
               }
 
               { /* Display regex filter panel. Search and remove using regex. */}
-              {appState.selectedPane == ActionPane.RegexFilter &&
+              {appState.selectedPane === ActionPane.RegexFilter &&
                 <section className="regexFilterWrapper">
                   <h3>Filter</h3>
                   <RegexFilter lines={currentSubtitle.lines} onUpdateLines={handleLinesUpdate} />
@@ -182,7 +181,7 @@ export default function Home() {
             </main>
 
             { /* Selected line editor. Outside of main to fill the whole width */}
-            {currentSubtitle.selectedLineIndex != null && appState.selectedPane == ActionPane.Lines &&
+            {currentSubtitle.selectedLineIndex !== null && appState.selectedPane === ActionPane.Lines &&
               <LineEditor line={currentSubtitle.lines[currentSubtitle.selectedLineIndex]} onLineEdit={handleLineEdit} />
             }
           </>

@@ -5,7 +5,7 @@ import type { Theme } from "~/utils/useTheme";
 interface AppBarProps {
   theme: Theme,
   setTheme: (theme: Theme) => void,
-  isFileOpen: Boolean,
+  isFileOpen: boolean,
   onClose: () => void;
 }
 
@@ -14,13 +14,14 @@ export function AppBar({ theme, setTheme, isFileOpen, onClose }: AppBarProps) {
   return (
     <nav className="appBar">
       <div className="themeSelect">
-        <span className={theme == "system" ? 'selected' : ''} onClick={e => setTheme("system")}>System</span>
-        <span className={theme == "light" ? 'selected' : ''} onClick={e => setTheme("light")}>Light</span>
-        <span className={theme == "dark" ? 'selected' : ''} onClick={e => setTheme("dark")}>Dark</span>
+        <span className={theme === "system" ? 'selected' : ''} onClick={() => { setTheme("system") }}>System</span>
+        <span className={theme === "light" ? 'selected' : ''} onClick={() => { setTheme("light") }}>Light</span>
+        <span className={theme === "dark" ? 'selected' : ''} onClick={() => { setTheme("dark") }}>Dark</span>
       </div>
-      {isFileOpen &&
+      {
+        isFileOpen &&
         <TextButton onClick={onClose}>Close</TextButton>
       }
-    </nav>
+    </nav >
   )
 }

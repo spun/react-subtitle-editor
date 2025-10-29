@@ -1,4 +1,4 @@
-import { updateTimesFromSubtitleLine, type SubtitleLine } from './SubtitleLine'
+import type { SubtitleLine } from './SubtitleLine'
 
 export class NoLineSelectedError extends Error {
   constructor(
@@ -12,7 +12,7 @@ export class NoLineSelectedError extends Error {
   }
 }
 
-export type SubtitleFile = {
+export interface SubtitleFile {
   filename: string;
   lines: SubtitleLine[];
   selectedLineIndex: number | null;
@@ -53,7 +53,7 @@ export function updateSelectedLineFromSubtitleFile(
   subtitleLine: SubtitleLine
 ): SubtitleFile {
   const selectedLineIndex = subtitleFile.selectedLineIndex
-  if (selectedLineIndex != null) {
+  if (selectedLineIndex !== null) {
     return updateLineFromSubtitleFile(subtitleFile, subtitleLine, selectedLineIndex)
   } else {
     throw new NoLineSelectedError()

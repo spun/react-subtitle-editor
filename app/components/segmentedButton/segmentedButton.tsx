@@ -21,13 +21,13 @@ export function SegmentedButton<T>({ options, selected, onSelected: onOptionSele
   return (
     <ul className="segmentedButton">
       {
-        options.map((option, index) => {
+        options.map((option) => {
           const isSelected = option.id === selected;
           return (
             <li
               key={option.key}
               className={isSelected ? "selected" : ""}
-              onClick={e => handleOptionSelected(option.id)}>
+              onClick={() => { handleOptionSelected(option.id) }}>
               {option.text}
             </li>
           )
