@@ -12,8 +12,20 @@ export default defineConfig([
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser }
   },
-  tseslint.configs.strict,
-  tseslint.configs.stylistic,
+  // Replacing "configs.recommended" with "strict"+"stylistic" is a
+  //  recommended change from the typescript-eslint docs
+  //  https://typescript-eslint.io/getting-started/#additional-configs
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
+  // Required to enable typed linting
+  //  https://typescript-eslint.io/getting-started/typed-linting
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
+  },
   pluginReact.configs.flat.recommended,
   reactHooks.configs.flat.recommended,
   {
