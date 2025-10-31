@@ -5,6 +5,7 @@ interface BaseButtonProps {
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 interface ButtonProps extends BaseButtonProps {
@@ -58,7 +59,7 @@ export function OutlinedButton({ className, children, onClick, leadingIcon }: Bu
   )
 }
 
-export function IconButton({ className, children, onClick }: BaseButtonProps) {
+export function IconButton({ className, children, onClick, ariaLabel }: BaseButtonProps) {
 
   const handleClick = (e: React.MouseEvent) => {
     if (onClick) {
@@ -71,6 +72,7 @@ export function IconButton({ className, children, onClick }: BaseButtonProps) {
     <button
       className={`iconButton filledButton ${className ?? ''}`}
       onClick={handleClick}
+      aria-label={ariaLabel}
     >
       {children}
     </button >

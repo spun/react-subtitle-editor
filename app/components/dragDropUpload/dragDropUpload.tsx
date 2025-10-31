@@ -91,22 +91,26 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
   };
 
   return (
-    <section className={`dragDropUpload ${isDragging ? 'dragging' : ''}`}
+    <div className={`dragDropUpload ${isDragging ? 'dragging' : ''}`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      onDragOver={handleDragOver}>
+      onDragOver={handleDragOver}
+    >
       {appBar}
       {showUploadForm ? (
         <section className="uploadForm">
-          <div className="dropCircle"> <p>Drop here</p> </div>
+          <p className="dropCircle">Drop here</p>
           <label className="uploadButton">
             <input type="file" accept=".srt,text/plain" onChange={handleFileChange} />
             Or click here to browse
-          </label></section>
+          </label>
+        </section>
       ) : (
-        <div className="mainContent">{children}</div>
+        <>
+          {children}
+        </>
       )}
-    </section>
+    </div>
   )
 }

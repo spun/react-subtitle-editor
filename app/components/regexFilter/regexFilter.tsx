@@ -3,6 +3,7 @@ import { getRegexMatches, mergeRegexMatchesWithAnnotation as mergeRegexMatchesWi
 import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
 import { IconButton, OutlinedButton } from "../buttons/buttons";
 import { ApplyAllIcon, ApplyIcon } from "../icons/icons";
+import './regexFilter.css'
 
 const hearingImpairedRegExps = [
   // Any string wrapped in between brackets
@@ -183,34 +184,38 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
     updateLines(updatedLines)
   }
 
-  return (
-    <>
-      <p>
-        <label>
-          <input type="checkbox" checked={filterHearingImpaired} onChange={e => { setFilterHearingImpaired(e.target.checked) }} />Hearing impaired
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="checkbox" checked={filterLyrics} onChange={e => { setFilterLyrics(e.target.checked) }} />Lyrics
-        </label>
-      </p>
-      <div className="actions">
-        <OutlinedButton leadingIcon={ApplyAllIcon} onClick={handleApplyAllRemove}>Apply all</OutlinedButton >
+  return (<>
+    <section className="regexFilter card">
+      <div className="filterOptions">
+        <h3>Filter</h3>
+        <p>
+          <label>
+            <input type="checkbox" checked={filterHearingImpaired} onChange={e => { setFilterHearingImpaired(e.target.checked) }} />Hearing impaired
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="checkbox" checked={filterLyrics} onChange={e => { setFilterLyrics(e.target.checked) }} />Lyrics
+          </label>
+        </p>
+        <div className="actions">
+          <OutlinedButton leadingIcon={ApplyAllIcon} onClick={handleApplyAllRemove}>Apply all</OutlinedButton >
+        </div>
       </div>
 
-      <ul className="lineList" >
+      <ul className="changesPreview">
         {
           filteredLines.map((line, index) => {
             return (
-              <li className="linePreview" key={index} >
+              <li className="line" key={index} >
                 <ChunkedLine chunks={line.chunks} onClick={() => { handleApplyLineRemove(line) }} />
               </li>
             )
           })
         }
       </ul>
-    </>
+    </section>
+  </>
   )
 }
 
@@ -236,7 +241,7 @@ function ChunkedLine({ chunks, onClick }: ChunkedLineProps) {
       </div>
 
       <div className="lineActions">
-        <IconButton className="actionApply" onClick={onClick}><ApplyIcon /></IconButton>
+        <IconButton className="actionApply" onClick={onClick} ariaLabel="Apply changes to line"><ApplyIcon /></IconButton>
       </div>
     </>
   )

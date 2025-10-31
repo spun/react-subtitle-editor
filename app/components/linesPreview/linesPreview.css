@@ -1,0 +1,112 @@
+.linesPreview {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    font-size: .85em;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    margin-bottom: 2px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:first-child {
+      border-start-start-radius: 24px;
+      border-start-end-radius: 24px;
+    }
+
+    &:last-child {
+      border-end-start-radius: 24px;
+      border-end-end-radius: 24px;
+      /* give lineEditor space */
+      margin-bottom: 250px;
+    }
+
+    &:hover {
+      background-color: var(--color-surface-variant);
+      color: var(--color-on-surface);
+    }
+
+    &.removed::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #ff4c45;
+    }
+
+    &.modified::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #ffa939;
+    }
+
+    &.selected {
+      background-color: var(--color-secondary);
+      color: var(--color-on-secondary);
+
+      .info {
+        color: color-mix(in srgb, currentColor 70%, var(--color-secondary));
+      }
+    }
+
+    .lineContent {
+      /* This will block the text from pushing our actions outside the container as it grows */
+      min-width: 0;
+
+      .info {
+        color: color-mix(in srgb, currentColor 70%, var(--color-surface));
+
+        .timestamp {
+          font-size: 1.2em;
+          font-family: monospace;
+          margin: 0 8px
+        }
+      }
+
+      .content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: pre;
+        font-size: 1.2em;
+      }
+    }
+
+    .lineActions {
+      display: flex;
+      gap: 4px;
+
+      .actionDelete {
+        background-color: transparent;
+        color: var(--color-delete-action);
+
+        &:hover {
+          color: var(--color-on-delete-action);
+          background-color: var(--color-delete-action);
+        }
+      }
+
+      .actionUndo {
+        background-color: transparent;
+        color: var(--color-undo-action);
+
+        &:hover {
+          background-color: var(--color-undo-action);
+          color: var(--color-on-undo-action);
+        }
+      }
+    }
+  }
+}

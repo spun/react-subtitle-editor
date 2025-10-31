@@ -24,13 +24,14 @@ export function LineEditor({ line, onLineEdit }: LineEditorProps) {
   }
 
   return (
-    <section className="lineEditorSheet">
-      <div className="content">
+    <section className="bottomSheet">
+      <div className="lineEditor">
         <p className="info">#{line.id} <span className="timestamp">{line.startTime}</span> ➔ <span className="timestamp">{line.endTime}</span></p>
         <textarea
           value={line.state === LineState.MODIFIED ? line.updatedText : line.text} onChange={handleTextChange}
           rows={8}
           cols={40}
+          aria-label="Line text"
         />
       </div>
     </section>
