@@ -1,0 +1,78 @@
+.regexFilter {
+    padding: 0;
+
+    .filterOptions {
+        padding: 8px 24px 24px 24px;
+
+        label {
+            display: flex;
+            flex-direction: co;
+            align-items: center;
+            gap: 8px;
+        }
+    }
+
+    .changesPreview {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        .line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px;
+            font-size: .85em;
+            background-color: var(--color-surface);
+            color: var(--color-on-surface);
+            border-top: 2px solid var(--color-surface-container-low);
+
+            &:last-child {
+                border-end-start-radius: 24px;
+                border-end-end-radius: 24px;
+            }
+
+            .lineContent .content .matchHighlight {
+                padding: 0 2px;
+                border-radius: 4px;
+
+                &:has(+ .matchHighlight) {
+                    border-start-end-radius: 0px;
+                    border-end-end-radius: 0px;
+                }
+
+                +.matchHighlight {
+                    border-start-start-radius: 0px;
+                    border-end-start-radius: 0px;
+                }
+
+                &.cc {
+                    background-color: #ff6961;
+                    color: black;
+                }
+
+                &.lyrics {
+                    background-color: #7e9bd5;
+                    color: black;
+                }
+
+                &.cc.lyrics {
+                    background-color: #de83f5;
+                    color: black;
+                }
+            }
+
+            .lineActions {
+                .actionApply {
+                    background-color: transparent;
+                    color: var(--color-undo-action);
+
+                    &:hover {
+                        background-color: var(--color-undo-action);
+                        color: var(--color-on-undo-action);
+                    }
+                }
+            }
+        }
+    }
+}

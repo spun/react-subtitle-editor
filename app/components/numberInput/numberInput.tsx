@@ -5,9 +5,10 @@ interface NumberInputProps {
   onChange: (value: number) => void;
   min: number;
   max: number;
+  ariaLabel?: string;
 }
 
-export function NumberInput({ value, onChange, min: minValue, max: maxValue }: NumberInputProps) {
+export function NumberInput({ value, onChange, min: minValue, max: maxValue, ariaLabel }: NumberInputProps) {
 
   const inputRef = useRef<HTMLInputElement>(null)
   // Store `value` in a ref so our event listener effect can access the latest number without
@@ -71,6 +72,6 @@ export function NumberInput({ value, onChange, min: minValue, max: maxValue }: N
   }
 
   return (
-    <input ref={inputRef} type="number" min={minValue} max={maxValue} value={value} onChange={handleChange} />
+    <input ref={inputRef} type="number" min={minValue} max={maxValue} value={value} onChange={handleChange} aria-label={ariaLabel} />
   )
 }
