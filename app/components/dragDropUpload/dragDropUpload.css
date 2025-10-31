@@ -1,85 +1,85 @@
 .dragDropUpload {
-    display: flex;
-    flex-direction: column;
-    height: calc(100dvh - 8px);
-    /* Hardcoded padding to replace with a border when dragging */
-    padding: 4px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 8px);
+  /* Hardcoded padding to replace with a border when dragging */
+  padding: 4px;
 
-    &.dragging {
-        border: 4px dashed var(--color-primary);
-        padding: 0px;
-
-        .uploadForm {
-
-            .dropCircle {
-                width: 400px;
-                height: 400px;
-                background-color: var(--color-primary-container);
-                border-radius: 50%;
-
-                &::before {
-                    border-style: dotted;
-                    animation: spin 10s linear infinite;
-                }
-            }
-        }
-    }
+  &.dragging {
+    border: 4px dashed var(--color-primary);
+    padding: 0px;
 
     .uploadForm {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 32px;
 
-        .dropCircle {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 200px;
-            height: 200px;
-            color: var(--color-primary);
-            transition: width 0.3s ease, height 0.3s ease;
+      .dropCircle {
+        width: 400px;
+        height: 400px;
+        background-color: var(--color-primary-container);
+        border-radius: 50%;
 
-            &::before {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                border: 4px dashed var(--color-primary);
-                animation: spin 120s linear infinite;
-            }
+        &::before {
+          border-style: dotted;
+          animation: spin 10s linear infinite;
         }
-
-        .uploadButton {
-            padding: 8px 16px;
-            border-radius: 5px;
-            color: var(--color-primary);
-            cursor: pointer;
-            transition: .5s ease-in-out;
-
-            &:hover {
-                background-color: var(--color-primary);
-                color: var(--color-on-primary);
-            }
-
-            input[type="file"] {
-                display: none;
-            }
-        }
+      }
     }
+  }
+
+  .uploadForm {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+
+    .dropCircle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 200px;
+      color: var(--color-primary);
+      transition: width 0.3s ease, height 0.3s ease;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 4px dashed var(--color-primary);
+        animation: spin 120s linear infinite;
+      }
+    }
+
+    .uploadButton {
+      padding: 8px 16px;
+      border-radius: 5px;
+      color: var(--color-primary);
+      cursor: pointer;
+      transition: .5s ease-in-out;
+
+      &:hover {
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    }
+  }
 }
 
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,32 +1,32 @@
 .topBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+
+  .themeSelect {
     display: flex;
-    justify-content: space-between;
-    padding: 16px;
+    align-items: center;
+    gap: 16px;
+    opacity: 0.7;
+    transition: 0.5s ease;
 
-    .themeSelect {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        opacity: 0.7;
-        transition: 0.5s ease;
+    span {
+      cursor: pointer;
 
-        span {
-            cursor: pointer;
+      &:hover {
+        color: var(--color-tertiary);
+        text-decoration-line: underline;
+        text-decoration-style: dashed;
+      }
 
-            &:hover {
-                color: var(--color-tertiary);
-                text-decoration-line: underline;
-                text-decoration-style: dashed;
-            }
-
-            &.selected {
-                text-decoration-line: underline;
-                text-decoration-style: solid;
-            }
-        }
+      &.selected {
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+      }
     }
+  }
 
-    &:hover .themeSelect {
-        opacity: 1;
-    }
+  &:hover .themeSelect {
+    opacity: 1;
+  }
 }

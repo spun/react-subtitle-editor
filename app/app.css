@@ -1,120 +1,120 @@
 @font-face {
-    font-family: 'Outfit';
-    src: url('/fonts/Outfit-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* Define the color variables for light and dark themes */
 :root {
+  color-scheme: light dark;
+  --color-primary: light-dark(#3B6A1C, #A0D57B);
+  --color-on-primary: light-dark(#FFFFFF, #163800);
+  --color-primary-container: light-dark(#BBF294, #245103);
+  --color-on-primary-container: light-dark(#0A2100, #BBF294);
+  --color-inverse-primary: light-dark(#A0D57B, #3B6A1C);
+  --color-secondary: light-dark(#56624B, #BDCBAF);
+  --color-on-secondary: light-dark(#FFFFFF, #283420);
+  --color-secondary-container: light-dark(#D9E7CA, #3E4A35);
+  --color-on-secondary-container: light-dark(#141E0C, #D9E7CA);
+  --color-tertiary: light-dark(#386666, #A0CFCE);
+  --color-on-tertiary: light-dark(#FFFFFF, #003737);
+  --color-tertiary-container: light-dark(#BBECEB, #1E4E4E);
+  --color-on-tertiary-container: light-dark(#002020, #BBECEB);
+  --color-background: light-dark(#F9F9F9, #131313);
+  --color-on-background: light-dark(#1B1B1B, #E2E2E2);
+  --color-surface: light-dark(#F9F9F9, #131313);
+  --color-on-surface: light-dark(#1B1B1B, #E2E2E2);
+  --color-surface-variant: light-dark(#E2E2E2, #474747);
+  --color-on-surface-variant: light-dark(#474747, #C6C6C6);
+  --color-surface-tint: light-dark(#3B6A1C, #A0D57B);
+  --color-inverse-surface: light-dark(#131313, #F9F9F9);
+  --color-inverse-on-surface: light-dark(#E2E2E2, #1B1B1B);
+  --color-error: light-dark(#B3261E, #F2B8B5);
+  --color-on-error: light-dark(#FFFFFF, #601410);
+  --color-error-container: light-dark(#F9DEDC, #8C1D18);
+  --color-on-error-container: light-dark(#410E0B, #F9DEDC);
+  --color-outline: light-dark(#777777, #919191);
+  --color-outline-variant: light-dark(#C6C6C6, #474747);
+  --color-scrim: light-dark(#000000, #000000);
+  --color-surface-bright: light-dark(#F9F9F9, #393939);
+  --color-surface-dim: light-dark(#DADADA, #131313);
+  --color-surface-container-lowest: light-dark(#EFF2EE, #1A1D18);
+  --color-surface-container-low: light-dark(#E9EDE7, #1F231C);
+  --color-surface-container: light-dark(#E5EAE2, #22281E);
+  --color-surface-container-high: light-dark(#E3E8DF, #242A1F);
+  --color-surface-container-highest: light-dark(#DFE5DB, #262E21);
+
+  --color-delete-action: light-dark(#c3625d, #c3625d);
+  --color-on-delete-action: light-dark(#facccc, #facccc);
+  --color-undo-action: light-dark(#6386d0, #6386d0);
+  --color-on-undo-action: light-dark(#c4d4f7, #c4d4f7);
+
+  accent-color: var(--color-primary);
+
+  /* Idea from https://web.dev/articles/light-dark */
+  &:has(.system) {
     color-scheme: light dark;
-    --color-primary: light-dark(#3B6A1C, #A0D57B);
-    --color-on-primary: light-dark(#FFFFFF, #163800);
-    --color-primary-container: light-dark(#BBF294, #245103);
-    --color-on-primary-container: light-dark(#0A2100, #BBF294);
-    --color-inverse-primary: light-dark(#A0D57B, #3B6A1C);
-    --color-secondary: light-dark(#56624B, #BDCBAF);
-    --color-on-secondary: light-dark(#FFFFFF, #283420);
-    --color-secondary-container: light-dark(#D9E7CA, #3E4A35);
-    --color-on-secondary-container: light-dark(#141E0C, #D9E7CA);
-    --color-tertiary: light-dark(#386666, #A0CFCE);
-    --color-on-tertiary: light-dark(#FFFFFF, #003737);
-    --color-tertiary-container: light-dark(#BBECEB, #1E4E4E);
-    --color-on-tertiary-container: light-dark(#002020, #BBECEB);
-    --color-background: light-dark(#F9F9F9, #131313);
-    --color-on-background: light-dark(#1B1B1B, #E2E2E2);
-    --color-surface: light-dark(#F9F9F9, #131313);
-    --color-on-surface: light-dark(#1B1B1B, #E2E2E2);
-    --color-surface-variant: light-dark(#E2E2E2, #474747);
-    --color-on-surface-variant: light-dark(#474747, #C6C6C6);
-    --color-surface-tint: light-dark(#3B6A1C, #A0D57B);
-    --color-inverse-surface: light-dark(#131313, #F9F9F9);
-    --color-inverse-on-surface: light-dark(#E2E2E2, #1B1B1B);
-    --color-error: light-dark(#B3261E, #F2B8B5);
-    --color-on-error: light-dark(#FFFFFF, #601410);
-    --color-error-container: light-dark(#F9DEDC, #8C1D18);
-    --color-on-error-container: light-dark(#410E0B, #F9DEDC);
-    --color-outline: light-dark(#777777, #919191);
-    --color-outline-variant: light-dark(#C6C6C6, #474747);
-    --color-scrim: light-dark(#000000, #000000);
-    --color-surface-bright: light-dark(#F9F9F9, #393939);
-    --color-surface-dim: light-dark(#DADADA, #131313);
-    --color-surface-container-lowest: light-dark(#EFF2EE, #1A1D18);
-    --color-surface-container-low: light-dark(#E9EDE7, #1F231C);
-    --color-surface-container: light-dark(#E5EAE2, #22281E);
-    --color-surface-container-high: light-dark(#E3E8DF, #242A1F);
-    --color-surface-container-highest: light-dark(#DFE5DB, #262E21);
+  }
 
-    --color-delete-action: light-dark(#c3625d, #c3625d);
-    --color-on-delete-action: light-dark(#facccc, #facccc);
-    --color-undo-action: light-dark(#6386d0, #6386d0);
-    --color-on-undo-action: light-dark(#c4d4f7, #c4d4f7);
+  &:has(.light) {
+    color-scheme: light;
+  }
 
-    accent-color: var(--color-primary);
-
-    /* Idea from https://web.dev/articles/light-dark */
-    &:has(.system) {
-        color-scheme: light dark;
-    }
-
-    &:has(.light) {
-        color-scheme: light;
-    }
-
-    &:has(.dark) {
-        color-scheme: dark;
-    }
+  &:has(.dark) {
+    color-scheme: dark;
+  }
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: "Outfit", sans-serif;
-    background-color: var(--color-surface-container-low);
-    color: var(--color-on-surface);
+  margin: 0;
+  padding: 0;
+  font-family: "Outfit", sans-serif;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
 }
 
 main {
-    max-width: 900px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 0 16px;
-    box-sizing: border-box;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .card {
-    padding: 8px 24px 24px 24px;
-    background-color: var(--color-surface);
-    color: var(--color-on-surface);
-    border-radius: 24px;
+  padding: 8px 24px 24px 24px;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  border-radius: 24px;
 
-    h2,
-    h3 {
-        color: var(--color-primary);
-    }
+  h2,
+  h3 {
+    color: var(--color-primary);
+  }
 
-    .actions {
-        display: flex;
-        justify-content: flex-end;
-    }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .bottomSheet {
-    position: fixed;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 980px;
-    border-radius: 24px 24px 0 0;
-    background-color: var(--color-secondary-container);
-    color: var(--color-on-secondary-container);
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 980px;
+  border-radius: 24px 24px 0 0;
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
 }
 
 .filterActionWrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
