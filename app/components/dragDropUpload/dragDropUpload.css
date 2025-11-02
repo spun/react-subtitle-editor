@@ -1,4 +1,7 @@
 .dragDropUpload {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 8px);
   /* Hardcoded padding to replace with a border when dragging */
   padding: 4px;
 
@@ -7,7 +10,6 @@
     padding: 0px;
 
     .uploadForm {
-      box-sizing: border-box;
 
       .dropCircle {
         width: 400px;
@@ -21,35 +23,25 @@
         }
       }
     }
-
-    .mainContent {
-      /* 
-      Differentiate between uploadForm and mainContent dragging border
-      to avoid showing a vertical scrollbar in uploadForm.
-      */
-      min-height: 100dvh;
-      box-sizing: border-box;
-    }
   }
 
   .uploadForm {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100dvh;
-    margin: 0;
+    justify-content: center;
     gap: 32px;
 
     .dropCircle {
-      transition: width 0.3s ease, height 0.3s ease;
-      width: 200px;
-      height: 200px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 200px;
+      height: 200px;
       color: var(--color-primary);
+      transition: width 0.3s ease, height 0.3s ease;
 
       &::before {
         content: '';
@@ -64,10 +56,10 @@
 
     .uploadButton {
       padding: 8px 16px;
+      border-radius: 5px;
+      color: var(--color-primary);
       cursor: pointer;
       transition: .5s ease-in-out;
-      color: var(--color-primary);
-      border-radius: 5px;
 
       &:hover {
         background-color: var(--color-primary);
@@ -80,6 +72,7 @@
     }
   }
 }
+
 
 @keyframes spin {
   from {
