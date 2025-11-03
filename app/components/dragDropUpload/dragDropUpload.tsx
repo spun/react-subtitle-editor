@@ -90,6 +90,10 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
     e.preventDefault();
   };
 
+  const handleDemoUpload = () => {
+    onUpload(demoSubtitle)
+  }
+
   return (
     <div className={`dragDropUpload ${isDragging ? 'dragging' : ''}`}
       onDragEnter={handleDragEnter}
@@ -100,11 +104,14 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
       {appBar}
       {showUploadForm ? (
         <section className="uploadForm">
-          <p className="dropCircle">Drop here</p>
-          <label className="uploadButton">
-            <input type="file" accept=".srt,text/plain" onChange={handleFileChange} />
-            Or click here to browse
-          </label>
+          <div className="dropArea">
+            <p className="dropCircle">Drop here</p>
+            <label className="uploadButton">
+              <input type="file" accept=".srt,text/plain" onChange={handleFileChange} />
+              Or click here to browse
+            </label>
+          </div>
+          <label className="loadDemo" onClick={handleDemoUpload}>or try a demo subtitle</label>
         </section>
       ) : (
         <>
@@ -113,4 +120,65 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
       )}
     </div>
   )
+}
+
+const demoSubtitle: SubtitleFile = {
+  "filename": "demo.srt",
+  "lines": [
+    {
+      "id": 1,
+      "startTime": "00:00:00,000",
+      "startTimeMillis": 0,
+      "endTime": "00:00:03,000",
+      "endTimeMillis": 3000,
+      "text": "Welcome to the subtitle editor demo!",
+      "state": LineState.ENABLED
+    },
+    {
+      "id": 2,
+      "startTime": "00:00:03,500",
+      "startTimeMillis": 3500,
+      "endTime": "00:00:06,000",
+      "endTimeMillis": 6000,
+      "text": "Click any line to edit its text"/* \nor start/end times"*/,
+      "state": LineState.ENABLED
+    },
+    {
+      "id": 3,
+      "startTime": "00:00:06,500",
+      "startTimeMillis": 6500,
+      "endTime": "00:00:09,000",
+      "endTimeMillis": 9000,
+      "text": "Use the \"Sync\" section to adjust \nall subtitle times at once",
+      "state": LineState.ENABLED
+    },
+    {
+      "id": 4,
+      "startTime": "00:00:09,500",
+      "startTimeMillis": 9500,
+      "endTime": "00:00:12,000",
+      "endTimeMillis": 12000,
+      "text": "Use the \"Filter\" section to remove\nlines like [EXPLOSION] or ♪ lyrics ♪",
+      "state": LineState.ENABLED
+    },
+    {
+      "id": 5,
+      "startTime": "00:00:12,500",
+      "startTimeMillis": 12500,
+      "endTime": "00:00:15,000",
+      "endTimeMillis": 15000,
+      "text": "When you are done, click \"Export\"\nto download the modified subtitle",
+      "state": LineState.ENABLED
+    },
+    {
+      "id": 6,
+      "startTime": "00:00:15,500",
+      "startTimeMillis": 15500,
+      "endTime": "00:00:18,000",
+      "endTimeMillis": 18000,
+      "text": "If you have issues or suggestions,\ngo to https://github.com/spun/react-subtitle-editor",
+      "state": LineState.ENABLED
+    }
+  ],
+  selectedLineIndex: null
 }

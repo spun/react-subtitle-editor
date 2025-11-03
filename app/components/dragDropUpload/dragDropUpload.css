@@ -33,41 +33,62 @@
     justify-content: center;
     gap: 32px;
 
-    .dropCircle {
-      position: relative;
+    .dropArea {
+      flex-grow: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 200px;
-      height: 200px;
-      color: var(--color-primary);
-      transition: width 0.3s ease, height 0.3s ease;
 
-      &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border: 4px dashed var(--color-primary);
-        animation: spin 120s linear infinite;
+      .dropCircle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 200px;
+        color: var(--color-primary);
+        transition: width 0.3s ease, height 0.3s ease;
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 4px dashed var(--color-primary);
+          animation: spin 120s linear infinite;
+        }
+      }
+
+      .uploadButton {
+        padding: 8px 16px;
+        border-radius: 5px;
+        color: var(--color-primary);
+        cursor: pointer;
+        transition: .5s ease-in-out;
+
+        &:hover {
+          background-color: var(--color-primary);
+          color: var(--color-on-primary);
+        }
+
+        input[type="file"] {
+          display: none;
+        }
       }
     }
 
-    .uploadButton {
-      padding: 8px 16px;
-      border-radius: 5px;
-      color: var(--color-primary);
+    .loadDemo {
+      margin: 8px;
+      padding: 8px;
       cursor: pointer;
-      transition: .5s ease-in-out;
+      opacity: 0.7;
+      transition: 0.5s ease;
 
       &:hover {
-        background-color: var(--color-primary);
-        color: var(--color-on-primary);
-      }
-
-      input[type="file"] {
-        display: none;
+        opacity: 1;
+        text-decoration-line: underline;
       }
     }
   }
