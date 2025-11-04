@@ -68,15 +68,9 @@ export function mergeRegexMatches(...matchesLists: RegexMatch[][]): RegexMatch[]
  * result = [{ 3, 8, ['A', 'B'] }, { 8, 11, ['A'] }, { 22, 27, ['A', 'B'] }, { 27, 30, ['A'] }]
  * 
  */
-export function mergeRegexMatchesWithAnnotation(
-  annotationA: string,
-  matchesA: RegexMatch[],
-  annotationB: string,
-  matchesB: RegexMatch[]
-): AnnotatedRegexMatch[] {
-
-  // Check if both are empty
-  if (matchesA.length === 0 && matchesB.length === 0) return [];
+export function mergeRegexMatchesWithAnnotation(...labelMatches: { label: string, matches: RegexMatch[] }[]): AnnotatedRegexMatch[] {
+  // Check if all are empty
+  if (labelMatches.every(lm => lm.matches.length === 0)) return [];
 
   // We could also check if one of them is empty and return the other one but we have
   // a final step that "joins" adjacent matches of the same type. 
@@ -85,11 +79,13 @@ export function mergeRegexMatchesWithAnnotation(
 
   // Create a Set of breakpoints
   const points = Array.from(
-    new Set([
-      // Add each start and end values into the Set
-      ...matchesA.flatMap(r => [r.start, r.end]),
-      ...matchesB.flatMap(r => [r.start, r.end])
-    ])
+    new Set(
+      labelMatches.flatMap(lm =>
+        lm.matches.flatMap(r =>
+          [r.start, r.end]
+        )
+      )
+    )
   ).sort((x, y) => x - y);
 
   const result: AnnotatedRegexMatch[] = [];
@@ -100,16 +96,16 @@ export function mergeRegexMatchesWithAnnotation(
     const end = points[i + 1];
 
     // Check if this breakpoint pair overlaps with any match from the RegexMatch arrays
-    const inA = matchesA.some(r => start >= r.start && end <= r.end);
-    const inB = matchesB.some(r => start >= r.start && end <= r.end);
+    const types: string[] = []
+    for (const lm of labelMatches) {
+      if (lm.matches.some(r => start >= r.start && end <= r.end)) {
+        types.push(lm.label)
+      }
+    }
 
     // If it doesn't. Skip.
-    if (!inA && !inB) continue;
+    if (types.length === 0) continue;
 
-    // Store which RegexMatch array had an overlap with our breakpoint pair
-    const types: string[] = []
-    if (inA) types.push(annotationA)
-    if (inB) types.push(annotationB)
 
     // Merge with previous if same type
     const last = result.at(result.length - 1);

@@ -44,7 +44,10 @@ describe('mergeRegexMatches', () => {
     // R: ---CCCCCAAA-----------CCCCCAAA------ (where C is A + B)
     const a: RegexMatch[] = [{ start: 3, end: 11 }, { start: 11, end: 14 }]
     const b: RegexMatch[] = []
-    const result = mergeRegexMatchesWithAnnotation('A', a, 'B', b)
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b }
+    )
     expect(result).toEqual([{ start: 3, end: 14, types: ['A'] }])
   })
 })
@@ -57,7 +60,10 @@ describe('mergeRegexMatchesWithAnnotation', () => {
     // R: ---CCCCCAAA----------BCCCCCAAA------ (where C is A + B)
     const a: RegexMatch[] = [{ start: 3, end: 11 }, { start: 22, end: 30 }]
     const b: RegexMatch[] = [{ start: 3, end: 8 }, { start: 21, end: 27 }]
-    const result = mergeRegexMatchesWithAnnotation('A', a, 'B', b)
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b }
+    )
     expect(result).toEqual([
       { start: 3, end: 8, types: ['A', 'B'] },
       { start: 8, end: 11, types: ['A'] },
@@ -73,7 +79,10 @@ describe('mergeRegexMatchesWithAnnotation', () => {
     // R: ---CCCC CCCC-----BCCCCAAAA------ (where C is A + B)
     const a: RegexMatch[] = [{ start: 3, end: 7 }, { start: 7, end: 11 }, { start: 17, end: 25 }]
     const b: RegexMatch[] = [{ start: 3, end: 7 }, { start: 7, end: 11 }, { start: 16, end: 21 }]
-    const result = mergeRegexMatchesWithAnnotation('A', a, 'B', b)
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b }
+    )
     expect(result).toEqual([
       { start: 3, end: 11, types: ['A', 'B'] },
       { start: 16, end: 17, types: ['B'] },
@@ -85,16 +94,49 @@ describe('mergeRegexMatchesWithAnnotation', () => {
   test('merge near matches of the same type in the same array', () => {
     const a: RegexMatch[] = [{ start: 3, end: 11 }, { start: 11, end: 14 }]
     const b: RegexMatch[] = []
-    const result = mergeRegexMatchesWithAnnotation('A', a, 'B', b)
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b }
+    )
     expect(result).toEqual([{ start: 3, end: 14, types: ['A'] }])
   })
 
   test('merge empty matches', () => {
     const a: RegexMatch[] = []
     const b: RegexMatch[] = []
-    const result = mergeRegexMatchesWithAnnotation('A', a, 'B', b)
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b }
+    )
     expect(result).toEqual([])
   })
+
+  test('merge N lists of matches', () => {
+    // A: --AAA---A------
+    // B: ---BBB---B-----
+    // C: ----CCC----C---
+    // D: -----DDD----D--
+    const a: RegexMatch[] = [{ start: 2, end: 5 }, { start: 8, end: 9 }]
+    const b: RegexMatch[] = [{ start: 3, end: 6 }, { start: 9, end: 10 }]
+    const c: RegexMatch[] = [{ start: 4, end: 7 }, { start: 11, end: 12 }]
+    const d: RegexMatch[] = [{ start: 5, end: 8 }, { start: 12, end: 13 }]
+    const result = mergeRegexMatchesWithAnnotation(
+      { label: 'A', matches: a },
+      { label: 'B', matches: b },
+      { label: 'C', matches: c },
+      { label: 'D', matches: d }
+    )
+    expect(result).toEqual([
+      { start: 2, end: 3, types: ["A"] },
+      { start: 3, end: 4, types: ["A", "B"] },
+      { start: 4, end: 5, types: ["A", "B", "C"] },
+      { start: 5, end: 6, types: ["B", "C", "D"] },
+      { start: 6, end: 7, types: ["C", "D"] },
+      { start: 7, end: 8, types: ["D"] },
+      { start: 8, end: 9, types: ["A"] },
+      { start: 9, end: 10, types: ["B"] },
+      { start: 11, end: 12, types: ["C"] },
+      { start: 12, end: 13, types: ["D"] },
+    ])
+  })
 })
-
-

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { getRegexMatches, mergeRegexMatchesWithAnnotation as mergeRegexMatchesWithAnnotations, mergeRegexMatches, type AnnotatedRegexMatch, type RegexMatch } from "~/models/RegexMatch";
+import { getRegexMatches, mergeRegexMatches, mergeRegexMatchesWithAnnotation, type AnnotatedRegexMatch, type RegexMatch } from "~/models/RegexMatch";
 import { LineState, type SubtitleLine } from "~/models/SubtitleLine";
 import { IconButton, OutlinedButton } from "../buttons/buttons";
 import { ApplyAllIcon, ApplyIcon } from "../icons/icons";
@@ -18,6 +18,11 @@ const hearingImpairedRegExps = [
 const lyricsRegExps = [
   // Sometimes, lyrics are wrapped in between ♪
   /♪.*?♪/gs
+]
+
+const speakerLabelsRegExps = [
+  // Speaker labels like CHARACTER: 
+  /^[A-Z][A-Z\s.\-']+:/gm
 ]
 
 /**
@@ -94,6 +99,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
   const [filterHearingImpaired, setFilterHearingImpaired] = useState(false)
   const [filterLyrics, setFilterLyrics] = useState(false)
+  const [filterSpeakerLabels, setFilterSpeakerLabels] = useState(false)
 
   const filteredLines = useMemo(() => {
     return lines
@@ -118,10 +124,23 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
           lyricsMatches.push(...mergeRegexMatches(...matchesPerRegex));
         }
 
+        // Find speaker labels
+        const speakerLabelsMatches: RegexMatch[] = []
+        if (filterSpeakerLabels) {
+          const matchesPerRegex: RegexMatch[][] = speakerLabelsRegExps.map(regex =>
+            getRegexMatches(line.text, regex)
+          )
+          speakerLabelsMatches.push(...mergeRegexMatches(...matchesPerRegex));
+        }
+
         // Merge matches from our different RegExp into one array while keeping a
         // reference to the original RegExp that got the match as an annotation.
         // This reference/annotation will be used as the className.
-        const merged = mergeRegexMatchesWithAnnotations("cc", hearingImpairedMatches, "lyrics", lyricsMatches)
+        const merged = mergeRegexMatchesWithAnnotation(
+          { label: "cc", matches: hearingImpairedMatches },
+          { label: "lyrics", matches: lyricsMatches },
+          { label: "speaker", matches: speakerLabelsMatches }
+        )
 
         // Use merged matches to chunk the line for each match.
         // This is useful for displaying the line where non-annotated (not matched
@@ -149,7 +168,7 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
 
         return acc
       }, [])
-  }, [lines, filterHearingImpaired, filterLyrics])
+  }, [lines, filterHearingImpaired, filterLyrics, filterSpeakerLabels])
 
   const handleApplyAllRemove = () => {
     const updatedLines = [...lines];
@@ -198,8 +217,13 @@ export function RegexFilter({ lines, onUpdateLines: updateLines }: RegexFilterPr
             <input type="checkbox" checked={filterLyrics} onChange={e => { setFilterLyrics(e.target.checked) }} />Lyrics
           </label>
         </p>
+        <p>
+          <label>
+            <input type="checkbox" checked={filterSpeakerLabels} onChange={e => { setFilterSpeakerLabels(e.target.checked) }} />Speaker labels
+          </label>
+        </p>
         <div className="actions">
-          <OutlinedButton leadingIcon={ApplyAllIcon} onClick={handleApplyAllRemove}>Apply all</OutlinedButton >
+          <OutlinedButton leadingIcon={ApplyAllIcon} onClick={handleApplyAllRemove}>Apply to all</OutlinedButton >
         </div>
       </div>
 

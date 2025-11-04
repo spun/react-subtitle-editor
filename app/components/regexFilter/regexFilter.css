@@ -4,11 +4,13 @@
   .filterOptions {
     padding: 8px 24px 24px 24px;
 
+    input[type="checkbox"] {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
     label {
-      display: flex;
-      flex-direction: co;
-      align-items: center;
-      gap: 8px;
+      cursor: pointer;
     }
   }
 
@@ -56,8 +58,28 @@
           color: black;
         }
 
+        &.speaker {
+          background-color: #ffaf37;
+          color: black;
+        }
+
         &.cc.lyrics {
-          background-color: #de83f5;
+          background-color: #bf829b;
+          color: black;
+        }
+
+        &.cc.speaker {
+          background-color: #ff8c4c;
+          color: black;
+        }
+
+        &.lyrics.speaker {
+          background-color: #bfa586;
+          color: black;
+        }
+
+        &.cc.lyrics.speaker {
+          background-color: #d4917a;
           color: black;
         }
       }
