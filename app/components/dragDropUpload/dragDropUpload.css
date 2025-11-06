@@ -11,15 +11,18 @@
 
     .uploadForm {
 
-      .dropCircle {
-        width: 400px;
-        height: 400px;
-        background-color: var(--color-primary-container);
-        border-radius: 50%;
+      .dropArea {
 
-        &::before {
-          border-style: dotted;
-          animation: spin 10s linear infinite;
+        .dropCircle {
+          width: 400px;
+          height: 400px;
+          background-color: var(--color-primary-container);
+          border-radius: 50%;
+
+          &::before {
+            border-style: dotted;
+            animation: spin 10s linear infinite;
+          }
         }
       }
     }
