@@ -9,6 +9,6 @@ COPY --from=development-dependencies-env /app/node_modules /app/node_modules
 WORKDIR /app
 RUN npm run build
 
-FROM docker.io/nginxinc/nginx-unprivileged:1.29.3-alpine@sha256:c2351965a68a252c32e0c03a5a7b2144087df078de199a3a67d35d41a41f4760
+FROM docker.io/nginxinc/nginx-unprivileged:1.29.3-alpine@sha256:7445ca31ca290543d404a36051a0dfe5575913381d5646e62b9ac4c3f8afef8f
 COPY --from=build-env /app/build/client /usr/share/nginx/html
 EXPOSE 8080
