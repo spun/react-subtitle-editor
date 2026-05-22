@@ -18,10 +18,10 @@ lines
 
 describe('srt parser', () => {
 
-  test('timestamp to seconds', () => {
+  test('timestamp to milliseconds', () => {
     const parser = new Parser();
     // This is the example given for the bad JS rounding fix.
-    expect(parser.timestampToSeconds("00:01:20,460")).toEqual(80.46)
+    expect(parser.timestampToMilliseconds("00:01:20,460")).toEqual(80460)
   })
 
   test('corrects bad timestamp formats', () => {
@@ -47,9 +47,9 @@ describe('srt parser', () => {
       {
         "id": "1",
         "startTime": "01:03:45,678",
-        "startSeconds": 3825.678,
+        "startMilliseconds": 3825678,
         "endTime": "01:23:04,600",
-        "endSeconds": 4984.600,
+        "endMilliseconds": 4984600,
         "text": "line text",
       },
     ])
@@ -63,25 +63,25 @@ describe('srt parser', () => {
       {
         "id": "1",
         "startTime": "00:00:01,000",
-        "startSeconds": 1,
+        "startMilliseconds": 1000,
         "endTime": "00:00:03,003",
-        "endSeconds": 3.003,
+        "endMilliseconds": 3003,
         "text": "[♪ music playing ♪]",
       },
       {
         "id": "2",
         "endTime": "00:00:10,385",
-        "endSeconds": 10.385,
+        "endMilliseconds": 10385,
         "startTime": "00:00:09,009",
-        "startSeconds": 9.009,
+        "startMilliseconds": 9009,
         "text": "Single line",
       },
       {
         "id": "3",
         "endTime": "00:00:12,095",
-        "endSeconds": 12.095,
+        "endMilliseconds": 12095,
         "startTime": "00:00:10,468",
-        "startSeconds": 10.468,
+        "startMilliseconds": 10468,
         "text": "Multiple\nlines",
       },
     ]);

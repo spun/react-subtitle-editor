@@ -32,9 +32,9 @@ export function DragDropUpload({ showForm: showUploadForm, onUpload, appBar, chi
           lines: parsedLines.map((line, index) => ({
             id: index + 1,
             startTime: line.startTime,
-            startTimeMillis: line.startSeconds * 1000,
+            startTimeMillis: line.startMilliseconds ,
             endTime: line.endTime,
-            endTimeMillis: line.endSeconds * 1000,
+            endTimeMillis: line.endMilliseconds,
             text: line.text,
             state: LineState.ENABLED
           })),
