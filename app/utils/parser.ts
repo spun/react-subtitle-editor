@@ -1,28 +1,33 @@
-// Source: https://github.com/1c7/srt-parser-2
+// Adapted from: https://github.com/1c7/srt-parser-2
+// Modified to return milliseconds instead of seconds.
 
 interface Line {
   id: string;
   startTime: string;
-  startSeconds: number;
+  startMilliseconds: number;
   endTime: string;
-  endSeconds: number;
+  endMilliseconds: number;
   text: string;
 }
+
+const MS_PER_SECOND = 1_000;
+const MS_PER_MINUTE = 60_000;
+const MS_PER_HOUR = 3_600_000;
 
 class Parser {
   separator = ",";
 
-  timestampToSeconds(srtTimestamp: string) {
+  timestampToMilliseconds(srtTimestamp: string): number {
     const [rest, millisecondsString] = srtTimestamp.split(",");
     const milliseconds = parseInt(millisecondsString);
     const [hours, minutes, seconds] = rest.split(":").map((x) => parseInt(x));
-    const result = milliseconds * 0.001 + seconds + 60 * minutes + 3600 * hours;
-
-    // fix odd JS roundings, e.g. timestamp '00:01:20,460' result is 80.46000000000001
-    return Math.round(result * 1000) / 1000;
+    return hours * MS_PER_HOUR
+      + minutes * MS_PER_MINUTE
+      + seconds * MS_PER_SECOND
+      + milliseconds;
   };
 
-  correctFormat(time: string) {
+  correctFormat(time: string): string {
     // Fix the format if the format is wrong
     // 00:00:28.9670 Become 00:00:28,967
     // 00:00:28.967  Become 00:00:28,967
@@ -111,7 +116,7 @@ class Parser {
     return data_array;
   }
 
-  fromSrt(data: string) {
+  fromSrt(data: string): Line[] {
     const originalData = data;
     let data_array = this.tryComma(originalData);
     if (data_array.length === 0) {
@@ -122,12 +127,12 @@ class Parser {
     for (let i = 0; i < data_array.length; i += 4) {
       const startTime = this.correctFormat(data_array[i + 1].trim());
       const endTime = this.correctFormat(data_array[i + 2].trim());
-      const new_line = {
+      const new_line: Line = {
         id: data_array[i].trim(),
         startTime,
-        startSeconds: this.timestampToSeconds(startTime),
+        startMilliseconds: this.timestampToMilliseconds(startTime),
         endTime,
-        endSeconds: this.timestampToSeconds(endTime),
+        endMilliseconds: this.timestampToMilliseconds(endTime),
         text: data_array[i + 3].trim(),
       };
       items.push(new_line);
@@ -136,7 +141,7 @@ class Parser {
     return items;
   }
 
-  toSrt(data: Line[]) {
+  toSrt(data: Line[]): string {
     let res = "";
 
     const end_of_line = "\r\n";
