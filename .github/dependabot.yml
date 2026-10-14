@@ -11,7 +11,6 @@ updates:
       # Group eslint until eslint-plugin-react adds support for v10
       eslint:
         patterns:
-          - "@eslint/js"
           - "eslint"
       # Group typescript until typescript-eslint adds support for v7
       typescript:
