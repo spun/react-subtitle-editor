@@ -15,7 +15,6 @@ updates:
       # Group typescript until typescript-eslint adds support for v7
       typescript:
         patterns:
-          - "typescript-eslint"
           - "typescript"
       updates:
         patterns: ["*"]
